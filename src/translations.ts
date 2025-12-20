@@ -1,0 +1,474 @@
+// translations.ts
+
+// Define the type for translation keys
+export type TranslationKeys = {
+  settings: string;
+  profile: string;
+  account: string;
+  language: string;
+  danger: string;
+  username: string;
+  email: string;
+  saveChanges: string;
+  reset: string;
+  changeAvatar: string;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  updatePassword: string;
+  deleteAccount: string;
+  deleteConfirm: string;
+  deleteButton: string;
+  selectLanguage: string;
+  english: string;
+  greek: string;
+  russian: string;
+  romanian: string;
+  back: string;
+  userSettings: string;
+  deleting: string;
+  deletePlaceholder: string;
+  deleteWarning: string;
+  deleteConfirm2: string;
+  type: string;
+  profileSettings: string;
+  accountSecurity: string;
+  enterCurrentPassword: string;
+  enterNewPassword: string;
+  confirmNewPassword: string;
+  languagePreview: string;
+  currentLanguage: string;
+  dangerZone: string;
+  deleteWarningFull: string;
+  languageChangedTo: string;
+  themeChangedTo: string;
+  avatarUpdatedSuccessfully: string;
+  failedToUploadAvatar: string;
+  profileUpdatedSuccessfully: string;
+  failedToUpdateProfile: string;
+  passwordChangedSuccessfully: string;
+  failedToChangePassword: string;
+  newPasswordsDontMatch: string;
+  typeToConfirm: string;
+  accountDeletedSuccessfully: string;
+  failedToDeleteAccount: string;
+  confirmationRequired: string;
+  cannotBeUndone: string;
+  audioVideo: string;
+};
+
+// Define the type for language codes
+export type LanguageCode = "us" | "gr" | "ru" | "md" | "es" | "fr" | "de";
+
+// Define the translations object with proper typing
+export const translations: Record<LanguageCode, TranslationKeys> = {
+  us: {
+    audioVideo: "Audio & Video",
+    settings: "Settings",
+    profile: "My Profile",
+    account: "Account Security",
+    language: "Language",
+    danger: "Danger Zone",
+    username: "Username",
+    email: "Email Address",
+    saveChanges: "Save Changes",
+    reset: "Reset",
+    changeAvatar: "Change Avatar",
+    currentPassword: "Current Password",
+    newPassword: "New Password",
+    confirmPassword: "Confirm New Password",
+    updatePassword: "Update Password",
+    deleteAccount: "Delete Account",
+    deleteConfirm: "Type DELETE MY ACCOUNT to confirm",
+    deleteButton: "Delete Account Forever",
+    selectLanguage: "Select Language",
+    english: "English",
+    greek: "Greek",
+    russian: "Russian",
+    romanian: "Română",
+    back: "Back",
+    userSettings: "User Settings",
+    deleting: "Deleting...",
+    deletePlaceholder: "DELETE MY ACCOUNT",
+    deleteConfirm2: "to confirm:",
+    type: "Type",
+    deleteWarning:
+      "This action cannot be undone. This will permanently delete your account, remove all your data, and delete all channels you own. You will be logged out immediately.",
+    profileSettings: "Profile Settings",
+    accountSecurity: "Account Security",
+    enterCurrentPassword: "Enter current password",
+    enterNewPassword: "Enter new password",
+    confirmNewPassword: "Confirm new password",
+    languagePreview: "Language Preview",
+    currentLanguage: "Current Language",
+    dangerZone: "Danger Zone",
+    deleteWarningFull:
+      "This action cannot be undone. This will permanently delete your account and all your data.",
+    languageChangedTo: "Language changed to",
+    themeChangedTo: "Theme changed to",
+    avatarUpdatedSuccessfully: "Avatar updated successfully!",
+    failedToUploadAvatar: "Failed to upload avatar",
+    profileUpdatedSuccessfully: "Profile updated successfully!",
+    failedToUpdateProfile: "Failed to update profile",
+    passwordChangedSuccessfully: "Password changed successfully!",
+    failedToChangePassword: "Failed to change password",
+    newPasswordsDontMatch: "New passwords don't match",
+    typeToConfirm: "Please type 'DELETE MY ACCOUNT' to confirm",
+    accountDeletedSuccessfully: "Account deleted successfully!",
+    failedToDeleteAccount: "Failed to delete account",
+    confirmationRequired:
+      "This action cannot be undone. This will permanently delete your account and all your data. Are you absolutely sure?",
+    cannotBeUndone: "This action cannot be undone.",
+  },
+  gr: {
+    audioVideo: "Ήχος & Βίντεο",
+    settings: "Ρυθμίσεις",
+    profile: "Το Προφίλ Μου",
+    account: "Ασφάλεια Λογαριασμού",
+    language: "Γλώσσα",
+    danger: "Ζώνη Κινδύνου",
+    username: "Όνομα χρήστη",
+    email: "Διεύθυνση Email",
+    saveChanges: "Αποθηκευση Αλλαγων",
+    reset: "Επαναφορα",
+    changeAvatar: "Αλλαγη Avatar",
+    currentPassword: "Τρέχον Κωδικός",
+    newPassword: "Νέος Κωδικός",
+    confirmPassword: "Επιβεβαίωση Νέου Κωδικού",
+    updatePassword: "Ενημερωση Κωδικου",
+    deleteAccount: "Διαγραφη Λογαριασμου",
+    deleteConfirm: "Πληκτρολογήστε DELETE MY ACCOUNT για επιβεβαίωση",
+    deleteButton: "Διαγραφή Λογαριασμού Μόνιμα",
+    selectLanguage: "Επιλογή Γλώσσας",
+    english: "Αγγλικά",
+    greek: "Ελληνικά",
+    russian: "Ρωσικά",
+    romanian: "Ρουμανικά",
+    back: "Πισω",
+    userSettings: "Ρυθμίσεις Χρήστη",
+    deleting: "Διαγραφη...",
+    deletePlaceholder: "ΔΙΑΓΡΑΦΗ ΤΟΥ ΛΟΓΑΡΙΑΣΜΟΥ ΜΟΥ",
+    deleteConfirm2: "για επιβεβαίωση:",
+    deleteWarning:
+      "Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Αυτό θα διαγράψει οριστικά τον λογαριασμό σας, θα καταργήσει όλα τα δεδομένα σας και θα διαγράψει όλα τα κανάλια που σας ανήκουν. Θα αποσυνδεθείτε αμέσως.",
+    type: "Πληκτρολογήστε",
+    profileSettings: "Ρυθμίσεις Προφίλ",
+    accountSecurity: "Ασφάλεια Λογαριασμού",
+    enterCurrentPassword: "Εισάγετε τον τρέχοντα κωδικό",
+    enterNewPassword: "Εισάγετε νέο κωδικό",
+    confirmNewPassword: "Επιβεβαιώστε τον νέο κωδικό",
+    languagePreview: "Προεπισκόπηση Γλώσσας",
+    currentLanguage: "Τρέχουσα Γλώσσα",
+    dangerZone: "Ζώνη Κινδύνου",
+    deleteWarningFull:
+      "Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Αυτό θα διαγράψει οριστικά τον λογαριασμό σας και όλα τα δεδομένα σας.",
+    languageChangedTo: "Η γλώσσα άλλαξε σε",
+    themeChangedTo: "Το θέμα άλλαξε σε",
+    avatarUpdatedSuccessfully: "Avatar ενημερώθηκε με επιτυχία!",
+    failedToUploadAvatar: "Αποτυχία ανάρτησης avatar",
+    profileUpdatedSuccessfully: "Το προφίλ ενημερώθηκε με επιτυχία!",
+    failedToUpdateProfile: "Αποτυχία ενημέρωσης προφίλ",
+    passwordChangedSuccessfully: "Ο κωδικός άλλαξε με επιτυχία!",
+    failedToChangePassword: "Αποτυχία αλλαγής κωδικού",
+    newPasswordsDontMatch: "Οι νέοι κωδικοί δεν ταιριάζουν",
+    typeToConfirm:
+      "Παρακαλώ πληκτρολογήστε 'ΔΙΑΓΡΑΦΗ ΤΟΥ ΛΟΓΑΡΙΑΣΜΟΥ ΜΟΥ' για επιβεβαίωση",
+    accountDeletedSuccessfully: "Ο λογαριασμός διαγράφηκε με επιτυχία!",
+    failedToDeleteAccount: "Αποτυχία διαγραφής λογαριασμού",
+    confirmationRequired:
+      "Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Αυτό θα διαγράψει οριστικά τον λογαριασμό σας και όλα τα δεδομένα σας. Είστε σίγουρος;",
+    cannotBeUndone: "Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+  },
+  ru: {
+    audioVideo: "Аудио и Видео",
+    settings: "Настройки",
+    profile: "Мой Профиль",
+    account: "Безопасность Аккаунта",
+    language: "Язык",
+    danger: "Опасная Зона",
+    username: "Имя пользователя",
+    email: "Адрес электронной почты",
+    saveChanges: "Сохранить изменения",
+    reset: "Сбросить",
+    changeAvatar: "Изменить аватар",
+    currentPassword: "Текущий пароль",
+    newPassword: "Новый пароль",
+    confirmPassword: "Подтвердите новый пароль",
+    updatePassword: "Обновить пароль",
+    deleteAccount: "Удалить аккаунт",
+    deleteConfirm: "Введите DELETE MY ACCOUNT для подтверждения",
+    deleteButton: "Удалить аккаунт навсегда",
+    selectLanguage: "Выберите язык",
+    english: "Английский",
+    greek: "Греческий",
+    russian: "Русский",
+    romanian: "Румынский",
+    back: "Назад",
+    userSettings: "Настройки Пользователя",
+    deleting: "Удаление...",
+    deletePlaceholder: "УДАЛИТЬ МОЙ АККАУНТ",
+    deleteConfirm2: "чтобы подтвердить:",
+    deleteWarning:
+      "Это действие невозможно отменить. Это приведет к безвозвратному удалению вашей учетной записи, всех ваших данных и всех ваших каналов. Вы будете немедленно выведены из системы.",
+    type: "Введите",
+    profileSettings: "Настройки Профиля",
+    accountSecurity: "Безопасность Аккаунта",
+    enterCurrentPassword: "Введите текущий пароль",
+    enterNewPassword: "Введите новый пароль",
+    confirmNewPassword: "Подтвердите новый пароль",
+    languagePreview: "Предпросмотр Языка",
+    currentLanguage: "Текущий Язык",
+    dangerZone: "Опасная Зона",
+    deleteWarningFull:
+      "Это действие невозможно отменить. Это приведет к безвозвратному удалению вашей учетной записи и всех ваших данных.",
+    languageChangedTo: "Язык изменен на",
+    themeChangedTo: "Тема изменена на",
+    avatarUpdatedSuccessfully: "Аватар успешно обновлен!",
+    failedToUploadAvatar: "Ошибка загрузки аватара",
+    profileUpdatedSuccessfully: "Профиль успешно обновлен!",
+    failedToUpdateProfile: "Ошибка обновления профиля",
+    passwordChangedSuccessfully: "Пароль успешно изменен!",
+    failedToChangePassword: "Ошибка изменения пароля",
+    newPasswordsDontMatch: "Новые пароли не совпадают",
+    typeToConfirm:
+      "Пожалуйста, введите 'УДАЛИТЬ МОЙ АККАУНТ' для подтверждения",
+    accountDeletedSuccessfully: "Аккаунт успешно удален!",
+    failedToDeleteAccount: "Ошибка удаления аккаунта",
+    confirmationRequired:
+      "Это действие невозможно отменить. Это приведет к безвозвратному удалению вашей учетной записи и всех ваших данных. Вы уверены?",
+    cannotBeUndone: "Это действие невозможно отменить.",
+  },
+  md: {
+    audioVideo: "Audio și Video",
+    settings: "Setări",
+    profile: "Profilul Meu",
+    account: "Securitate Cont",
+    language: "Limba",
+    danger: "Zona Periculoasă",
+    username: "Nume utilizator",
+    email: "Adresă de email",
+    saveChanges: "Salvează modificările",
+    reset: "Resetează",
+    changeAvatar: "Schimbă avatarul",
+    currentPassword: "Parola curentă",
+    newPassword: "Parola nouă",
+    confirmPassword: "Confirmă parola nouă",
+    updatePassword: "Actualizează parola",
+    deleteAccount: "Șterge contul",
+    deleteConfirm: "Scrie DELETE MY ACCOUNT pentru a confirma",
+    deleteButton: "Șterge contul permanent",
+    selectLanguage: "Selectează limba",
+    english: "Engleză",
+    greek: "Greacă",
+    russian: "Rusă",
+    romanian: "Română",
+    back: "Înapoi",
+    userSettings: "Setări Utilizator",
+    deleting: "Se șterge...",
+    deletePlaceholder: "ȘTERGEȚI CONTUL MEU",
+    deleteConfirm2: "pentru a confirma:",
+    deleteWarning:
+      "Această acțiune nu poate fi anulată. Aceasta va șterge definitiv contul dvs., va elimina toate datele dvs. și va șterge toate canalele pe care le dețineți. Veți fi deconectat imediat.",
+    type: "Introduceți",
+    profileSettings: "Setări Profil",
+    accountSecurity: "Securitate Cont",
+    enterCurrentPassword: "Introduceți parola curentă",
+    enterNewPassword: "Introduceți parola nouă",
+    confirmNewPassword: "Confirmați parola nouă",
+    languagePreview: "Previzualizare Limbă",
+    currentLanguage: "Limba Curentă",
+    dangerZone: "Zona Periculoasă",
+    deleteWarningFull:
+      "Această acțiune nu poate fi anulată. Aceasta va șterge definitiv contul dvs. și toate datele dvs.",
+    languageChangedTo: "Limba a fost schimbată la",
+    themeChangedTo: "Tema a fost schimbată la",
+    avatarUpdatedSuccessfully: "Avatar actualizat cu succes!",
+    failedToUploadAvatar: "Eroare la încărcarea avatarului",
+    profileUpdatedSuccessfully: "Profil actualizat cu succes!",
+    failedToUpdateProfile: "Eroare la actualizarea profilului",
+    passwordChangedSuccessfully: "Parolă schimbată cu succes!",
+    failedToChangePassword: "Eroare la schimbarea parolei",
+    newPasswordsDontMatch: "Noile parole nu se potrivesc",
+    typeToConfirm:
+      "Vă rugăm introduceți 'ȘTERGEȚI CONTUL MEU' pentru a confirma",
+    accountDeletedSuccessfully: "Cont șters cu succes!",
+    failedToDeleteAccount: "Eroare la ștergerea contului",
+    confirmationRequired:
+      "Această acțiune nu poate fi anulată. Aceasta va șterge definitiv contul dvs. și toate datele dvs. Sunteți sigur?",
+    cannotBeUndone: "Această acțiune nu poate fi anulată.",
+  },
+  es: {
+    audioVideo: "Audio y Video",
+    settings: "Configuración",
+    profile: "Mi Perfil",
+    account: "Seguridad de la Cuenta",
+    language: "Idioma",
+    danger: "Zona de Peligro",
+    username: "Nombre de usuario",
+    email: "Dirección de correo",
+    saveChanges: "Guardar Cambios",
+    reset: "Restablecer",
+    changeAvatar: "Cambiar Avatar",
+    currentPassword: "Contraseña Actual",
+    newPassword: "Nueva Contraseña",
+    confirmPassword: "Confirmar Nueva Contraseña",
+    updatePassword: "Actualizar Contraseña",
+    deleteAccount: "Eliminar Cuenta",
+    deleteConfirm: "Escribe ELIMINAR MI CUENTA para confirmar",
+    deleteButton: "Eliminar Cuenta Permanentemente",
+    selectLanguage: "Seleccionar Idioma",
+    english: "Inglés",
+    greek: "Griego",
+    russian: "Ruso",
+    romanian: "Rumano",
+    back: "Atrás",
+    userSettings: "Configuración de Usuario",
+    deleting: "Eliminando...",
+    deletePlaceholder: "ELIMINAR MI CUENTA",
+    deleteConfirm2: "para confirmar:",
+    deleteWarning:
+      "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta, eliminará todos tus datos y eliminará todos los canales que posees. Serás desconectado inmediatamente.",
+    type: "Escribe",
+    profileSettings: "Configuración de Perfil",
+    accountSecurity: "Seguridad de la Cuenta",
+    enterCurrentPassword: "Ingresa la contraseña actual",
+    enterNewPassword: "Ingresa la nueva contraseña",
+    confirmNewPassword: "Confirma la nueva contraseña",
+    languagePreview: "Vista Previa del Idioma",
+    currentLanguage: "Idioma Actual",
+    dangerZone: "Zona de Peligro",
+    deleteWarningFull:
+      "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y todos tus datos.",
+    languageChangedTo: "Idioma cambiado a",
+    themeChangedTo: "Tema cambiado a",
+    avatarUpdatedSuccessfully: "¡Avatar actualizado con éxito!",
+    failedToUploadAvatar: "Error al subir avatar",
+    profileUpdatedSuccessfully: "¡Perfil actualizado con éxito!",
+    failedToUpdateProfile: "Error al actualizar perfil",
+    passwordChangedSuccessfully: "¡Contraseña cambiada con éxito!",
+    failedToChangePassword: "Error al cambiar contraseña",
+    newPasswordsDontMatch: "Las nuevas contraseñas no coinciden",
+    typeToConfirm: "Por favor escribe 'ELIMINAR MI CUENTA' para confirmar",
+    accountDeletedSuccessfully: "¡Cuenta eliminada con éxito!",
+    failedToDeleteAccount: "Error al eliminar cuenta",
+    confirmationRequired:
+      "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y todos tus datos. ¿Estás absolutamente seguro?",
+    cannotBeUndone: "Esta acción no se puede deshacer.",
+  },
+  fr: {
+    audioVideo: "Audio et Vidéo",
+    settings: "Paramètres",
+    profile: "Mon Profil",
+    account: "Sécurité du Compte",
+    language: "Langue",
+    danger: "Zone de Danger",
+    username: "Nom d'utilisateur",
+    email: "Adresse e-mail",
+    saveChanges: "Enregistrer les Modifications",
+    reset: "Réinitialiser",
+    changeAvatar: "Changer l'Avatar",
+    currentPassword: "Mot de Passe Actuel",
+    newPassword: "Nouveau Mot de Passe",
+    confirmPassword: "Confirmer le Nouveau Mot de Passe",
+    updatePassword: "Mettre à Jour le Mot de Passe",
+    deleteAccount: "Supprimer le Compte",
+    deleteConfirm: "Tapez SUPPRIMER MON COMPTE pour confirmer",
+    deleteButton: "Supprimer le Compte Définitivement",
+    selectLanguage: "Sélectionner la Langue",
+    english: "Anglais",
+    greek: "Grec",
+    russian: "Russe",
+    romanian: "Roumain",
+    back: "Retour",
+    userSettings: "Paramètres Utilisateur",
+    deleting: "Suppression...",
+    deletePlaceholder: "SUPPRIMER MON COMPTE",
+    deleteConfirm2: "pour confirmer:",
+    deleteWarning:
+      "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte, supprimera toutes vos données et supprimera tous les canaux que vous possédez. Vous serez déconnecté immédiatement.",
+    type: "Tapez",
+    profileSettings: "Paramètres du Profil",
+    accountSecurity: "Sécurité du Compte",
+    enterCurrentPassword: "Entrez le mot de passe actuel",
+    enterNewPassword: "Entrez le nouveau mot de passe",
+    confirmNewPassword: "Confirmez le nouveau mot de passe",
+    languagePreview: "Aperçu de la Langue",
+    currentLanguage: "Langue Actuelle",
+    dangerZone: "Zone de Danger",
+    deleteWarningFull:
+      "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et toutes vos données.",
+    languageChangedTo: "Langue changée en",
+    themeChangedTo: "Thème changé en",
+    avatarUpdatedSuccessfully: "Avatar mis à jour avec succès !",
+    failedToUploadAvatar: "Échec du téléchargement de l'avatar",
+    profileUpdatedSuccessfully: "Profil mis à jour avec succès !",
+    failedToUpdateProfile: "Échec de la mise à jour du profil",
+    passwordChangedSuccessfully: "Mot de passe changé avec succès !",
+    failedToChangePassword: "Échec du changement de mot de passe",
+    newPasswordsDontMatch: "Les nouveaux mots de passe ne correspondent pas",
+    typeToConfirm: "Veuillez taper 'SUPPRIMER MON COMPTE' pour confirmer",
+    accountDeletedSuccessfully: "Compte supprimé avec succès !",
+    failedToDeleteAccount: "Échec de la suppression du compte",
+    confirmationRequired:
+      "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et toutes vos données. Êtes-vous absolument sûr ?",
+    cannotBeUndone: "Cette action ne peut pas être annulée.",
+  },
+  de: {
+    audioVideo: "Audio und Video",
+    settings: "Einstellungen",
+    profile: "Mein Profil",
+    account: "Kontosicherheit",
+    language: "Sprache",
+    danger: "Gefahrenzone",
+    username: "Benutzername",
+    email: "E-Mail-Adresse",
+    saveChanges: "Änderungen speichern",
+    reset: "Zurücksetzen",
+    changeAvatar: "Avatar ändern",
+    currentPassword: "Aktuelles Passwort",
+    newPassword: "Neues Passwort",
+    confirmPassword: "Neues Passwort bestätigen",
+    updatePassword: "Passwort aktualisieren",
+    deleteAccount: "Konto löschen",
+    deleteConfirm: "Geben Sie MEIN KONTO LÖSCHEN zur Bestätigung ein",
+    deleteButton: "Konto endgültig löschen",
+    selectLanguage: "Sprache auswählen",
+    english: "Englisch",
+    greek: "Griechisch",
+    russian: "Russisch",
+    romanian: "Rumänisch",
+    back: "Zurück",
+    userSettings: "Benutzereinstellungen",
+    deleting: "Wird gelöscht...",
+    deletePlaceholder: "MEIN KONTO LÖSCHEN",
+    deleteConfirm2: "zur Bestätigung:",
+    deleteWarning:
+      "Diese Aktion kann nicht rückgängig gemacht werden. Dadurch wird Ihr Konto dauerhaft gelöscht, alle Ihre Daten werden entfernt und alle Kanäle, die Sie besitzen, werden gelöscht. Sie werden sofort abgemeldet.",
+    type: "Geben Sie ein",
+    profileSettings: "Profileinstellungen",
+    accountSecurity: "Kontosicherheit",
+    enterCurrentPassword: "Aktuelles Passwort eingeben",
+    enterNewPassword: "Neues Passwort eingeben",
+    confirmNewPassword: "Neues Passwort bestätigen",
+    languagePreview: "Sprachvorschau",
+    currentLanguage: "Aktuelle Sprache",
+    dangerZone: "Gefahrenzone",
+    deleteWarningFull:
+      "Diese Aktion kann nicht rückgängig gemacht werden. Dadurch wird Ihr Konto und alle Ihre Daten dauerhaft gelöscht.",
+    languageChangedTo: "Sprache geändert zu",
+    themeChangedTo: "Thema geändert zu",
+    avatarUpdatedSuccessfully: "Avatar erfolgreich aktualisiert!",
+    failedToUploadAvatar: "Fehler beim Hochladen des Avatars",
+    profileUpdatedSuccessfully: "Profil erfolgreich aktualisiert!",
+    failedToUpdateProfile: "Fehler beim Aktualisieren des Profils",
+    passwordChangedSuccessfully: "Passwort erfolgreich geändert!",
+    failedToChangePassword: "Fehler beim Ändern des Passworts",
+    newPasswordsDontMatch: "Neue Passwörter stimmen nicht überein",
+    typeToConfirm: "Bitte geben Sie 'MEIN KONTO LÖSCHEN' zur Bestätigung ein",
+    accountDeletedSuccessfully: "Konto erfolgreich gelöscht!",
+    failedToDeleteAccount: "Fehler beim Löschen des Kontos",
+    confirmationRequired:
+      "Diese Aktion kann nicht rückgängig gemacht werden. Dadurch wird Ihr Konto und alle Ihre Daten dauerhaft gelöscht. Sind Sie absolut sicher?",
+    cannotBeUndone: "Diese Aktion kann nicht rückgängig gemacht werden.",
+  },
+};

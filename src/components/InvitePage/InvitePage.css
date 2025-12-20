@@ -1,0 +1,178 @@
+.invite-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.invite-container {
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.invite-page .glass {
+  background: #0630169c;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.invite-page h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.invite-page h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.invite-page h3 {
+  font-size: 1.75rem;
+}
+
+.invite-page .spinner-border {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .invite-page {
+    padding: 0rem !important;
+    align-items: flex-start;
+    padding-top: 2rem !important;
+  }
+
+  .invite-container {
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+
+  .invite-page h3 {
+    font-size: 1.5rem;
+  }
+
+  .invite-page p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .invite-page {
+    padding: 0rem !important;
+    margin: 0 !important;
+    padding-top: 5rem !important;
+  }
+
+  .invite-container {
+    padding: 0 !important; /* Remove all padding */
+    padding: 1.5rem !important;
+    margin: 0 !important;
+  }
+
+  .invite-page h3 {
+    font-size: 1.35rem;
+  }
+
+  .invite-page h2 {
+    font-size: 1.25rem;
+  }
+
+  /* Adjust channel image size for mobile */
+  .channel-image-container img,
+  .channel-image-container .rounded-circle {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .channel-image-container .rounded-circle.p-4 {
+    padding: 1rem !important;
+  }
+
+  .channel-image-container .rounded-circle.p-4 img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 375px) {
+  .invite-container {
+    padding: 0rem !important;
+    margin: 0 !important;
+  }
+
+  .invite-page h3 {
+    font-size: 1.25rem;
+  }
+}
+
+#background-image-obj {
+  animation: slideUp linear 10s infinite alternate;
+}
+
+@keyframes slideUp {
+  from {
+    width: 150%;
+  }
+  to {
+    width: 154%;
+  }
+}
+
+#background-image-obj1 {
+  animation: slideUp1 linear 10s infinite alternate;
+}
+
+@keyframes slideUp1 {
+  from {
+    width: 150%;
+  }
+  to {
+    width: 154%;
+  }
+}
+/* InvitePage.css - Mobile fixes */
+@media (max-width: 768px) {
+  .invite-page {
+    padding: 1rem 0rem !important;
+    align-items: flex-start;
+    padding-top: 2rem !important;
+  }
+
+  .invite-container {
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .invite-page {
+    padding: 1rem 0rem !important;
+    padding-top: 1rem !important;
+  }
+
+  .invite-container {
+    padding: 1.5rem !important;
+  }
+}

@@ -1,0 +1,133 @@
+.settings-page {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Custom Select Hover Effects */
+.hover\\:bg-white:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for dropdown */
+.position-absolute::-webkit-scrollbar {
+  width: 6px;
+}
+
+.position-absolute::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.position-absolute::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.position-absolute::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.settings-container {
+  border-radius: 24px !important;
+  width: 100%;
+}
+
+.settings-sidebar {
+  background-color: rgba(146, 146, 146, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.settings-sidebar .nav-link:hover {
+  color: white;
+  background-color: rgba(146, 146, 146, 0.1) !important;
+}
+
+.settings-sidebar .nav-link.active {
+  color: white;
+  background-color: rgba(146, 146, 146, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.settings-content {
+  background-color: rgba(146, 146, 146, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 400px;
+}
+.settings-container.glass {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.option-dropdownad {
+  background-color: rgba(146, 146, 146, 0.2) !important;
+  border: none !important;
+  transition: all 0.125s ease;
+}
+.bg-customshit {
+  background-color: rgba(146, 146, 146, 0.2) !important;
+}
+.option-dropdownad:hover {
+  transition: all 0.125s ease;
+  background-color: rgba(146, 146, 146, 0.3) !important;
+}
+.select-dropdownad {
+  transition: all 0.125s ease;
+}
+.select-dropdownad:hover {
+  transition: all 0.125s ease;
+  background-color: rgba(146, 146, 146, 0.2) !important;
+}
+.form-control-glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.form-label {
+  color: white;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.profile-picture img {
+  filter: drop-shadow(0 0 0.5rem #00000031);
+}
+.settings-container .form-control {
+  transition: all 0.125s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.settings-container .form-control:focus-within {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+}
+
+.settings-container .form-control:hover {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+}
+@media (max-width: 768px) {
+  .settings-container.glass {
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .settings-page {
+    padding: 0rem 0rem !important;
+  }
+  .settings-container {
+    border-radius: 0 0 2em 2em !important;
+  }
+}

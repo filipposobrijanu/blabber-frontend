@@ -1,0 +1,236 @@
+/* ========================================
+   ALL LIST & ACTIVE NOW LIST - CONSISTENT STYLING
+   ======================================== */
+
+/* Base styles for both lists */
+.all-users-list,
+.active-now-list {
+  width: 100%;
+  height: 100%;
+  max-height: 75vh;
+}
+
+.all-users-list .users-container,
+.active-now-list .users-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+/* User items - consistent styling */
+.all-users-list .user-item,
+.active-now-list .user-item {
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.all-users-list .user-item:hover,
+.active-now-list .user-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* User avatars */
+.all-users-list .user-item img,
+.active-now-list .user-item img,
+.all-users-list .user-item .rounded-5,
+.active-now-list .user-item .rounded-5 {
+  width: 36px !important;
+  height: 36px !important;
+  flex-shrink: 0 !important;
+  filter: drop-shadow(0 0 0.2rem #00000031);
+  object-fit: cover;
+}
+
+/* User info */
+.all-users-list .user-item .flex-grow-1,
+.active-now-list .user-item .flex-grow-1 {
+  min-width: 0 !important;
+}
+
+.all-users-list .user-item .fw-semibold,
+.active-now-list .user-item .fw-semibold {
+  font-size: 0.9rem !important;
+  max-width: 120px !important;
+  color: white;
+}
+
+/* Status badges */
+.all-users-list .user-item .text-end small,
+.active-now-list .user-item .text-end small {
+  font-size: 0.7rem !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 50px;
+}
+
+/* Channel group headers */
+.all-users-list .channel-group h6,
+.active-now-list .channel-group h6 {
+  color: white;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Container styles */
+.all-users-list .d-flex.flex-column.gap-2,
+.active-now-list .d-flex.flex-column.gap-2 {
+  width: 100%;
+  gap: 0.5rem !important;
+  padding: 0;
+  margin: 0;
+  max-height: calc(100vh - 75vh);
+  overflow-y: auto;
+}
+
+/* ========================================
+   TABLET & DESKTOP (769px+)
+   ======================================== */
+@media (min-width: 769px) {
+  .all-users-list,
+  .active-now-list {
+    width: 100%;
+  }
+
+  .all-users-list .users-container,
+  .active-now-list .users-container {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   MOBILE (768px and below)
+   ======================================== */
+@media (max-width: 768px) {
+  /* No-Channel Container */
+  .no-channel {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .no-channel h5 {
+    font-size: 1.1rem !important;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  .no-channel hr {
+    margin: 0.5rem 0 1rem 0 !important;
+  }
+
+  /* Hide nested sidebar */
+  .no-channel .sidebar {
+    display: none !important;
+  }
+
+  .no-channel .sidebar-content {
+    display: none !important;
+  }
+
+  /* Channels list becomes main container */
+  .no-channel .channels-list {
+    width: 100% !important;
+    flex: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Both lists */
+  .all-users-list,
+  .active-now-list {
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .all-users-list .users-container,
+  .active-now-list .users-container {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* User List Container */
+  .all-users-list .d-flex.flex-column.gap-2,
+  .active-now-list .d-flex.flex-column.gap-2 {
+    width: 100% !important;
+    gap: 0.5rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Individual User Item */
+  .all-users-list .user-item,
+  .active-now-list .user-item {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0.75rem !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Channel Groups */
+  .all-users-list .channel-group,
+  .active-now-list .channel-group {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Empty State */
+  .empty-messages {
+    width: 100% !important;
+    height: auto !important;
+    padding: 2rem 1rem !important;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE (576px and below)
+   ======================================== */
+@media (max-width: 576px) {
+  .no-channel {
+    padding: 0.75rem !important;
+  }
+
+  .no-channel h5 {
+    font-size: 1rem !important;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  .all-users-list .user-item,
+  .active-now-list .user-item {
+    padding: 0.5rem !important;
+  }
+
+  .all-users-list .user-item img,
+  .active-now-list .user-item img,
+  .all-users-list .user-item .rounded-5,
+  .active-now-list .user-item .rounded-5 {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .all-users-list .user-item .fw-semibold,
+  .active-now-list .user-item .fw-semibold {
+    font-size: 0.8rem !important;
+  }
+
+  /* Status badge smaller */
+  .all-users-list .user-item .text-end small,
+  .active-now-list .user-item .text-end small {
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+}

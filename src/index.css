@@ -1,0 +1,279 @@
+/* ========================================
+   MODERN FONT IMPORTS
+   ======================================== */
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chillax:wght@300;400;500;600;700&family=Synonym:wght@400;500;600;700&display=swap");
+
+/* ========================================
+   DISPLAY FONT STACK
+   ======================================== */
+@font-face {
+  font-family: "DisplayFont";
+  src: local("Inter Tight"), local("Geist"), local("SF Pro Display"),
+    local("Instrument Sans"), local("Chillax");
+  font-style: normal;
+  font-weight: 300 700;
+}
+
+/* ========================================
+   BODY FONT STACK
+   ======================================== */
+@font-face {
+  font-family: "BodyFont";
+  src: local("Instrument Sans"), local("Inter Tight"), local("Synonym"),
+    local("SF Pro Text"), local("System UI");
+  font-style: normal;
+  font-weight: 400 600;
+}
+
+/* ========================================
+   BUTTON STYLES
+   ======================================== */
+/* ========================================
+   INDUSTRIAL TECH BUTTON FONTS
+   ======================================== */
+
+/* ========================================
+   BUTTON STYLES - PROPERLY BOLD
+   ======================================== */
+button,
+.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  font-family: "DisplayFont", "Inter Tight", "Geist", system-ui, sans-serif !important;
+  font-weight: 800 !important; /* ACTUALLY BOLD */
+  letter-spacing: -0.01em;
+  text-transform: none;
+  font-size: 0.95em;
+  transition: all 0.15s ease;
+}
+
+/* Make sure it stays bold in all states */
+button:hover,
+.btn:hover,
+button:active,
+.btn:active {
+  transform: translateY(-2.5px);
+  transition: all 0.2s ease;
+}
+.btn-light,
+.btn-light:disabled {
+  transition: all 0.15s ease;
+  border: none;
+  outline: 2px solid rgba(0, 0, 0, 0.521) !important;
+  background-color: rgba(0, 0, 0, 0.521) !important;
+  background-color: none !important;
+  color: white;
+}
+.btn-light:hover {
+  outline: 2px solid rgba(0, 0, 0, 0.375) !important;
+  background-color: rgba(0, 0, 0, 0.375) !important;
+  background-color: none !important;
+  color: white !important;
+  transition: all 0.15s ease;
+}
+.btn-light:focus {
+  scale: 0.925;
+  opacity: inherit !important;
+  background: none !important;
+  background-color: rgba(0, 0, 0, 0.375) !important;
+}
+
+.btn-outline-light,
+.btn-outline-light:disabled {
+  transition: all 0.15s ease;
+  border: none;
+  outline: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: white;
+}
+.btn-outline-light:hover {
+  outline: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+  color: white !important;
+  transition: all 0.15s ease;
+}
+.btn-outline-light:focus {
+  scale: 0.925;
+  opacity: inherit !important;
+  background: none !important;
+  background-color: rgba(0, 0, 0, 0.432) !important;
+}
+
+/* ========================================
+   HEADING STYLES
+   ======================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero-title,
+.section-title {
+  font-family: "DisplayFont", "Inter Tight", "Geist", system-ui, sans-serif !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ========================================
+   BODY TEXT STYLES
+   ======================================== */
+body,
+p,
+li,
+span,
+div,
+input,
+textarea,
+select {
+  font-family: "BodyFont", "Instrument Sans", "Inter Tight", system-ui,
+    sans-serif !important;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+/* ========================================
+   CODE & MONOSPACE STYLES
+   ======================================== */
+code,
+pre,
+kbd,
+samp {
+  font-family: "Geist Mono", "SF Mono", "Monaco", "Menlo", monospace !important;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+}
+/* ========================================
+   GLOBAL RESET & SETUP
+   ======================================== */
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-width: 100vw;
+  width: 100vw;
+}
+
+/* ========================================
+   GLOBAL SCROLLBAR - APPLIES TO EVERYTHING
+   ======================================== */
+
+/* Webkit Browsers (Chrome, Safari, Edge) - APPLIES TO ALL ELEMENTS */
+*::-webkit-scrollbar {
+  width: thin;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+/* Firefox - APPLIES TO ALL ELEMENTS */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
+}
+
+/* Keep scrollbars visible by default, hide on non-hover if desired */
+/* body:not(:hover) *::-webkit-scrollbar-thumb {
+  opacity: 0.7;
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "MinimalFont", "Space Grotesk", "Geist", "Cabinet Grotesk",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Dynamic gradient background */
+  --x: calc(var(--posX, 0) * 1px);
+  --y: calc(var(--posY, 0) * 1px);
+  background-image: linear-gradient(115deg, rgb(42, 116, 67), #1a8f64),
+    radial-gradient(
+      90% 100% at calc(50% + var(--x)) calc(0% + var(--y)),
+      rgb(163, 163, 163),
+      #0b572886
+    ),
+    radial-gradient(
+      100% 100% at calc(80% - var(--x)) calc(0% - var(--y)),
+      #0d4620bd,
+      #052a13bd
+    ),
+    radial-gradient(
+      150% 210% at calc(100% + var(--x)) calc(0% + var(--y)),
+      #929292bd,
+      #073b1bbd
+    ),
+    radial-gradient(
+      100% 100% at calc(100% - var(--x)) calc(30% - var(--y)),
+      #0f432a,
+      #083d1cbd
+    ),
+    linear-gradient(60deg, #052511bd, #042210bd);
+  background-blend-mode: overlay, overlay, overlay, overlay, overlay, normal;
+}
+
+/* ========================================
+   IMAGES
+   ======================================== */
+img {
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* ========================================
+   INPUTS & FOCUS
+   ======================================== */
+input:focus {
+  border: none;
+  outline: none;
+}
+
+/* ========================================
+   TEXT SELECTION
+   ======================================== */
+::selection {
+  background-color: #acacac3b;
+  color: inherit;
+}
+
+/* ========================================
+   MAIN CONTAINERS
+   ======================================== */
+.App,
+#root,
+.fullscreen-login {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* ========================================
+   SETTINGS PAGE - MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 0.5rem !important;
+    align-items: flex-start !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+}

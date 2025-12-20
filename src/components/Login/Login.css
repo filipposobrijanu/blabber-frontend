@@ -1,0 +1,492 @@
+@keyframes skeletonanim {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.skeleton-blink {
+  animation: skeletonanim 0.3s infinite ease-in-out;
+}
+@keyframes skeletonanim2 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.skeleton-blink2 {
+  animation: skeletonanim2 0.45s infinite ease-in-out;
+}
+@keyframes fadeinmodalanim {
+  0% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+.modal,
+.invite-page,
+.message,
+.users-container,
+.channels,
+.settings-page,
+.settings-content div {
+  animation: fadeinmodalanim 0.25s ease-in-out;
+}
+/* Modal fade animations */
+.modal.fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.modal.fade-out {
+  animation: fadeOut 0.25s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Modal content animations */
+.modal.fade-in .modal-content {
+  animation: slideIn 0.25s ease-out forwards;
+}
+
+.modal.fade-out .modal-content {
+  animation: slideOut 0.25s ease-in forwards;
+}
+/* From Uiverse.io by adamgiebl */
+.dots-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.dot {
+  height: 7px;
+  width: 7px;
+  margin-right: 8px;
+  border-radius: 10px;
+  background-color: #cfcfcfab;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child {
+  margin-right: 0;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    background-color: #cfcfcfab;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(255, 255, 255);
+  }
+
+  100% {
+    transform: scale(0.8);
+    background-color: #cfcfcfab;
+  }
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+.login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 14px 0;
+  color: white;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-divider::before {
+  margin-right: 12px;
+}
+
+.login-divider::after {
+  margin-left: 12px;
+}
+/* Ensure modal backdrop stays during animation */
+.modal {
+  transition: none; /* Remove Bootstrap's transition if it conflicts */
+}
+.glass {
+  background: #0630169c;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+.login-container.glass {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.channel-btn {
+  filter: drop-shadow(0 0 0.2rem #00000031) !important;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.login-content {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* REMOVE any margin/padding that pushes it off center */
+}
+::placeholder {
+  color: white;
+}
+.eyething {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.eyething:hover {
+  opacity: 0.8;
+  transition: opacity 0.1s ease;
+}
+/* Completely remove the calendar dropdown icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+/* For other browsers */
+input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+input:focus {
+  color: white;
+}
+input {
+  color: white;
+}
+.login-container {
+  border-radius: 24px !important;
+  animation: fadeinmodalanim 0.3s ease-in-out;
+}
+/* Override the form-control border for login inputs */
+.login-container .form-control {
+  transition: all 0.125s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.login-container .form-control:focus-within {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+}
+
+.login-container .form-control:hover {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+#hover-opacity:hover {
+  opacity: 0.8;
+
+  transition: opacity 0.1s ease;
+}
+#hover-opacity {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+/* Add these responsive styles at the bottom of your Login.css */
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .login-content {
+    padding: 1rem;
+    justify-content: flex-start !important; /* Change from center to top */
+    min-height: 100vh;
+    padding: 0 !important; /* Remove all padding */
+    margin: 0 !important; /* Remove all margin */
+  }
+  .login-container.glass {
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .login-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 0 0 2em 2em !important;
+    margin: 0 auto;
+    padding: 1.5rem !important;
+  }
+
+  .login-form {
+    padding: 0.5rem !important;
+    width: 100%;
+  }
+
+  /* Adjust form controls for mobile */
+  .form-control {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  /* Reduce top margin on mobile */
+  .channel-btn.friends-btn {
+    margin-top: 1rem !important; /* Reduced from mt-5 */
+  }
+
+  /* Reduce container top margin on mobile */
+  .login-container {
+    margin-top: 0rem !important; /* Reduced from mt-5 */
+  }
+}
+
+/* Desktop - keep centered */
+@media (min-width: 769px) {
+  .login-content {
+    justify-content: center !important; /* Center on desktop */
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container {
+    padding: 1rem !important;
+  }
+
+  .login-form {
+    padding: 0.25rem !important;
+  }
+
+  /* Make buttons full width on very small screens */
+  .modal-footer .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+}
+
+/* Ensure the background covers full height */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+/* Add these specific fixes to your existing CSS */
+
+/* Reset outer margins more aggressively */
+html,
+body,
+#root,
+.App,
+.fullscreen-login {
+  overflow-x: hidden;
+}
+
+/* Fix Login state specifically */
+@media (max-width: 768px) {
+  /* Target the login container specifically */
+  .login-content .login-container {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 1.5rem !important;
+  }
+
+  /* Remove any outer spacing from parent containers in login state */
+  .login-content > div > .mb-5 {
+    margin-bottom: 0 !important;
+  }
+
+  .login-content > div > .mb-5 > .mb-5 {
+    margin-bottom: 0 !important;
+  }
+}
+/* Login.css - Fix mobile centering */
+@media (max-width: 768px) {
+  .login-content {
+    padding: 1rem;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-top: 2rem;
+  }
+
+  .login-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+
+  /* Ensure form elements are properly sized on mobile */
+  .login-form {
+    width: 100%;
+  }
+
+  .form-control {
+    width: 100% !important;
+  }
+}
+
+/* Prevent horizontal scrolling on mobile */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+/* Login.css - Fix for very small screens */
+@media (max-width: 400px) {
+  .form-control {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .login-form input:not([type="checkbox"]) {
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+}
+/* Fix for forgot password modal input SVG */
+.modal-body .form-control svg {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  flex-shrink: 0 !important;
+}
+
+.modal-body .form-control {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.modal-body .form-control svg.bi-envelope-fill {
+  width: 18px !important;
+  height: 18px !important;
+  flex-shrink: 0 !important;
+}
+/* Remove scrollbar from login only */
+.fullscreen-login,
+.fullscreen-login .login-content,
+.fullscreen-login .login-container,
+.fullscreen-login .login-form {
+  overflow: hidden !important;
+}
+
+/* Ensure no scrollbars on login page only */
+.fullscreen-login {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Keep scroll for settings/TOS/Privacy pages */
+.settings-page {
+  overflow-y: auto !important;
+}
+/* Remove scrollbar from login only but keep background working */
+.fullscreen-login {
+  position: relative !important;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.fullscreen-login .login-content,
+.fullscreen-login .login-container,
+.fullscreen-login .login-form {
+  overflow: hidden !important;
+}
+
+/* Ensure background stays fixed and covers properly */
+.fullscreen-login #background-image-obj {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 0 !important;
+}
+
+.fullscreen-login > div:last-child {
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}
+/* Fix for edit message input min-width */
+.message-content .form-control {
+  min-width: 120px !important;
+}

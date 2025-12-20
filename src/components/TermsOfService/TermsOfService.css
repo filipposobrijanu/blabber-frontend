@@ -1,0 +1,41 @@
+/* Add these responsive styles for Terms/Privacy pages */
+
+/* Mobile Responsive Styles for Terms/Privacy */
+@media (max-width: 768px) {
+  .invite-page.login-container {
+    padding: 0rem !important;
+    margin: 0 !important;
+  }
+
+  .invite-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    border-radius: 0 0 2em 2em !important;
+    margin-top: 0em !important;
+    padding: 1.5rem !important;
+  }
+
+  .terms-content,
+  .privacy-content {
+    max-height: 350px !important;
+  }
+  .invite-container.glass {
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .invite-page.login-container {
+    justify-content: center !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .invite-container {
+    border-radius: 2em !important;
+  }
+}

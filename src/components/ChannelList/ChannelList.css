@@ -1,0 +1,75 @@
+.glass-popup {
+  background: #0a4b2470;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+.glass-popup .modal-header {
+  border-bottom: none !important;
+}
+
+/* Remove modal footer border */
+.glass-popup .modal-footer {
+  border-top: none !important;
+}
+
+.channel_buttt {
+  z-index: 22;
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+.channel_buttt:hover {
+  transform: translateY(-2.5px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(var(--glass-blur));
+  transition: all ease 0.1s;
+}
+#link_but_circle svg {
+  transition: all 0.25s ease;
+}
+#link_but_circle:hover svg {
+  transition: all 0.25s ease;
+  transform: rotate(45deg);
+}
+.channel_buttt.active {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(var(--glass-blur));
+  transition: all ease 0.1s;
+}
+.channel_buttt.active:hover {
+  background: rgba(255, 255, 255, 0.164);
+  backdrop-filter: blur(var(--glass-blur));
+  transition: all ease 0.1s;
+}
+.modal-body .form-control {
+  transition: all 0.125s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.modal-body .form-control:focus-within {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+}
+
+.modal-body .form-control:hover {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: #1f1f1f6e !important;
+}
+
+#invitecodeid .form-control {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  font-weight: bold;
+}
