@@ -5,6 +5,9 @@
 
 The frontend client for **Blabber Chat**, a real-time messaging application inspired by Discord. This interface provides a seamless, dynamic user experience with real-time state updates, channel navigation, and instant messaging capabilities.
 
+![Blabber Screenshot](images/0.png)
+![Blabber Screenshot](images/1.png)
+
 ## ✨ Core Features
 
 * **Real-Time UI:** Live message rendering and socket-based updates without page reloads.
@@ -12,6 +15,12 @@ The frontend client for **Blabber Chat**, a real-time messaging application insp
 * **Component-Based Architecture:** Modular design using React for efficient state management and UI scalability.
 * **Interactive Navigation:** Smooth transition between chat rooms, channels, and user profile management.
 * **Real-time Indicators:** Visual feedback for typing status and user connectivity.
+
+![Blabber Screenshot](images/2.png)
+![Blabber Screenshot](images/3.png)
+![Blabber Screenshot](images/4.png)
+![Blabber Screenshot](images/5.png)
+![Blabber Screenshot](images/6.png)
 
 ## 🛠️ Built With
 
