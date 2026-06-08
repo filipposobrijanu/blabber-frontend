@@ -5,7 +5,7 @@
 
 The frontend client for **Blabber Chat**, a real-time messaging application inspired by Discord. This interface provides a seamless, dynamic user experience with real-time state updates, channel navigation, and instant messaging capabilities.
 
-![Blabber Screenshot](images/0.png)
+![Blabber Screenshot](images/0.PNG)
 ![Blabber Screenshot](images/1.png)
 
 ## ✨ Core Features
