@@ -16,7 +16,6 @@ The frontend client for **Blabber Chat**, a real-time messaging application insp
 * **Interactive Navigation:** Smooth transition between chat rooms, channels, and user profile management.
 * **Real-time Indicators:** Visual feedback for typing status and user connectivity.
 
-![Blabber Screenshot](images/2.PNG)
 ![Blabber Screenshot](images/3.PNG)
 ![Blabber Screenshot](images/4.PNG)
 ![Blabber Screenshot](images/5.PNG)
