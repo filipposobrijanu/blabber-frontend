@@ -1,13 +1,8 @@
-// channelSettingsTranslations.ts
-
-// Define the type for Channel Settings translation keys
 export type ChannelSettingsTranslationKeys = {
-  // Tab names
   general: string;
   members: string;
   dangerZone: string;
 
-  // General tab
   channelName: string;
   description: string;
   channelColor: string;
@@ -15,7 +10,6 @@ export type ChannelSettingsTranslationKeys = {
   saving: string;
   reset: string;
 
-  // Members tab
   addMemberPlaceholder: string;
   addMember: string;
   currentMembers: string;
@@ -24,7 +18,6 @@ export type ChannelSettingsTranslationKeys = {
   offline: string;
   remove: string;
 
-  // Danger zone
   leaveChannel: string;
   leaveChannelDescription: string;
   deleteChannel: string;
@@ -39,7 +32,6 @@ export type ChannelSettingsTranslationKeys = {
   settingsName: string;
 };
 
-// Define the type for language codes
 export type ChannelSettingsLanguageCode =
   | "us"
   | "gr"
@@ -49,7 +41,6 @@ export type ChannelSettingsLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const channelSettingsTranslations: Record<
   ChannelSettingsLanguageCode,
   ChannelSettingsTranslationKeys

@@ -1,5 +1,3 @@
-// audioVideoSettingsTranslations.ts
-
 export type AudioVideoSettingsTranslationKeys = {
   audioVideoSettings: string;
   microphone: string;

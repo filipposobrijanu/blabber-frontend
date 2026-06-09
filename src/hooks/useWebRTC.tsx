@@ -65,16 +65,13 @@ interface PeerConnectionData {
   stream?: MediaStream;
 }
 
-// Constants for better maintainability
 const RING_TIMEOUT_MS = 10000;
 const CALL_TIMEOUT_MS = 300000;
 const ICE_SERVERS: RTCConfiguration = {
   iceServers: [
-    // Primary STUN servers (for direct connections)
     { urls: "stun:stun.l.google.com:19302" },
     { urls: "stun:stun1.l.google.com:19302" },
 
-    // Backup TURN servers for symmetric routing
     {
       urls: [
         "turn:openrelay.metered.ca:80?transport=udp",
@@ -90,9 +87,9 @@ const ICE_SERVERS: RTCConfiguration = {
     },
   ],
   iceTransportPolicy: "all",
-  iceCandidatePoolSize: 0, // Disable pooling for consistency
-  bundlePolicy: "max-bundle", // Bundle all media streams
-  rtcpMuxPolicy: "require", // Force RTCP muxing
+  iceCandidatePoolSize: 0,
+  bundlePolicy: "max-bundle",
+  rtcpMuxPolicy: "require",
 };
 
 const VIDEO_CONSTRAINTS: MediaTrackConstraints = {
@@ -117,12 +114,11 @@ export const useWebRTC = ({
   currentChannel,
   onlineUsers = [],
 }: UseWebRTCProps) => {
-  // State management
   const [callState, setCallState] = useState<
     "idle" | "calling" | "ringing" | "connected" | "failed"
   >("idle");
   const [remoteStreams, setRemoteStreams] = useState<Map<string, MediaStream>>(
-    new Map()
+    new Map(),
   );
   const [incomingCall, setIncomingCall] = useState<CallData | null>(null);
   const [callError, setCallError] = useState<string>("");
@@ -134,7 +130,6 @@ export const useWebRTC = ({
   const [remoteIsDMChannel, setRemoteIsDMChannel] = useState<boolean>(false);
   const [isAudioOnly, setIsAudioOnly] = useState<boolean>(false);
 
-  // Add to your useWebRTC hook state
   const [connectionStatuses, setConnectionStatuses] = useState<
     Map<
       string,
@@ -149,7 +144,6 @@ export const useWebRTC = ({
     >
   >(new Map());
 
-  // In your peer connection creation, add stats monitoring
   const monitorConnectionStats = useCallback(
     (pc: RTCPeerConnection, userId: string) => {
       let isActive = true;
@@ -179,7 +173,6 @@ export const useWebRTC = ({
               packetLoss =
                 totalPackets > 0 ? (packetsLost / totalPackets) * 100 : 0;
 
-              // Calculate bitrate (kbps)
               if (report.bytesReceived) {
                 const bytesPerSecond =
                   report.bytesReceived / (report.timestamp / 1000);
@@ -188,7 +181,6 @@ export const useWebRTC = ({
             }
           });
 
-          // Determine connection status based on stats
           let status: "good" | "fair" | "poor" | "disconnected" = "good";
 
           if (
@@ -202,7 +194,6 @@ export const useWebRTC = ({
             status = "fair";
           }
 
-          // Only update if still active
           if (isActive) {
             setConnectionStatuses((prev) => {
               const newMap = new Map(prev);
@@ -222,10 +213,8 @@ export const useWebRTC = ({
         }
       };
 
-      // Update stats every 3 seconds
       const interval = setInterval(updateStats, 3000);
 
-      // Initial update
       updateStats();
 
       return () => {
@@ -233,20 +222,18 @@ export const useWebRTC = ({
         clearInterval(interval);
       };
     },
-    []
+    [],
   );
 
   const [isRemoteSpeaking, setIsRemoteSpeaking] = useState<boolean>(false);
   const [isLocalSpeaking, setIsLocalSpeaking] = useState<boolean>(false);
 
-  // Refs for persistent values
   const callInitiatedByMeRef = useRef<boolean>(false);
   const localStreamRef = useRef<MediaStream | null>(null);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const callTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const ringTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  // Multiple connection refs
 
   const [isCallSuspended, setIsCallSuspended] = useState(false);
 
@@ -259,40 +246,33 @@ export const useWebRTC = ({
   const callEndedRef = useRef<boolean>(false);
 
   const [originalCallChannel, setOriginalCallChannel] = useState<string | null>(
-    null
+    null,
   );
 
   const isSettingRemoteRef = useRef<boolean>(false);
 
-  // Sound hooks
   const { playSound, playRingtone, stopRingtone, cleanup } = useCallSounds();
   const suspendCall = useCallback(() => {
     console.log("⏸️ Suspending call due to channel change");
     setIsCallSuspended(true);
 
-    // Mute audio/video but keep connection alive
     if (localStreamRef.current) {
       localStreamRef.current.getTracks().forEach((track) => {
         track.enabled = false;
       });
     }
   }, []);
-
-  // Add a resumeCall function
   const resumeCall = useCallback(() => {
     console.log("▶️ Resuming call");
     setIsCallSuspended(false);
 
-    // Re-enable audio/video
     if (localStreamRef.current) {
       localStreamRef.current.getTracks().forEach((track) => {
         track.enabled = true;
       });
     }
   }, []);
-  // Handle channel changes
 
-  // Audio context management for echo cancellation
   useEffect(() => {
     let audioContext: AudioContext | null = null;
 
@@ -321,7 +301,6 @@ export const useWebRTC = ({
     };
   }, []);
 
-  // Media stream initialization with better error handling
   const initializeMediaStream = useCallback(
     async (audioOnly: boolean = false): Promise<MediaStream> => {
       try {
@@ -380,23 +359,22 @@ export const useWebRTC = ({
           error.name === "NotAllowedError"
             ? "Camera/microphone permission denied."
             : error.name === "NotFoundError"
-            ? "No media devices found."
-            : "Failed to access media devices.";
+              ? "No media devices found."
+              : "Failed to access media devices.";
         setCallError(errorMessage);
         throw new Error(errorMessage);
       }
     },
-    []
+    [],
   );
 
-  // ICE candidate queue processing
   const processIceCandidateQueue = useCallback(
     async (pc?: RTCPeerConnection): Promise<void> => {
       const targetPc = pc;
       if (!targetPc || iceCandidateQueueRef.current.length === 0) return;
 
       console.log(
-        `📥 Processing ${iceCandidateQueueRef.current.length} queued ICE candidates`
+        `📥 Processing ${iceCandidateQueueRef.current.length} queued ICE candidates`,
       );
 
       const processedCandidates: RTCIceCandidateInit[] = [];
@@ -417,19 +395,18 @@ export const useWebRTC = ({
 
       if (failedCandidates.length > 0) {
         console.warn(
-          `⚠️ ${failedCandidates.length} ICE candidates failed to process`
+          `⚠️ ${failedCandidates.length} ICE candidates failed to process`,
         );
       }
     },
-    []
+    [],
   );
 
-  // Peer connection creation with robust event handling
   const createPeerConnection = useCallback(
     (
       remoteUserId: string,
       remoteUserImage?: string,
-      remoteUsername?: string
+      remoteUsername?: string,
     ): RTCPeerConnection => {
       console.log("🔧 Creating peer connection for:", remoteUserId);
 
@@ -452,14 +429,13 @@ export const useWebRTC = ({
         localStreamRef.current.getTracks().forEach((track) => {
           if (track.enabled && track.readyState === "live") {
             console.log(
-              `➕ Adding ${track.kind} track to peer connection for ${remoteUserId}`
+              `➕ Adding ${track.kind} track to peer connection for ${remoteUserId}`,
             );
             pc.addTrack(track, localStreamRef.current!);
           }
         });
       }
 
-      // Data channel for speaking indicators
       try {
         const dataChannel = pc.createDataChannel(`speaking-${remoteUserId}`, {
           ordered: true,
@@ -480,14 +456,14 @@ export const useWebRTC = ({
           } catch (error) {
             console.warn(
               `⚠️ Failed to parse speaking data from ${remoteUserId}:`,
-              error
+              error,
             );
           }
         };
       } catch (error) {
         console.warn(
           `⚠️ Could not create data channel for ${remoteUserId}:`,
-          error
+          error,
         );
       }
 
@@ -504,7 +480,7 @@ export const useWebRTC = ({
           } catch (error) {
             console.warn(
               `⚠️ Failed to parse speaking data from ${remoteUserId}:`,
-              error
+              error,
             );
           }
         };
@@ -518,7 +494,6 @@ export const useWebRTC = ({
             address: event.candidate.address,
           });
 
-          // FIX: Get isDMChannel from state or props
           const isDMChannel =
             remoteIsDMChannel || currentChannel?.isDM || false;
 
@@ -528,7 +503,7 @@ export const useWebRTC = ({
             from: userId,
             fromUsername: username,
             fromImage: "",
-            isChannelCall: !isDMChannel, // This should be opposite of isDMChannel
+            isChannelCall: !isDMChannel,
             channelId: currentChannel?.id,
           });
         } else if (!event.candidate) {
@@ -539,10 +514,9 @@ export const useWebRTC = ({
       pc.ontrack = (event) => {
         console.log(
           `🎵 Remote track received from ${remoteUserId}:`,
-          event.track.kind
+          event.track.kind,
         );
 
-        // Check if we already have a stream for this user
         const existingStream = remoteStreamsRef.current.get(remoteUserId);
 
         if (!existingStream) {
@@ -585,7 +559,7 @@ export const useWebRTC = ({
               return newMap;
             });
             break;
-        } // Cleanup function
+        }
         return () => {
           if (cleanupMonitor) cleanupMonitor();
         };
@@ -602,10 +576,9 @@ export const useWebRTC = ({
       monitorConnectionStats,
       playSound,
       currentChannel,
-    ]
+    ],
   );
 
-  // Call rejection handler
   const rejectCall = useCallback(() => {
     console.log("❌ Rejecting call");
 
@@ -634,7 +607,6 @@ export const useWebRTC = ({
     setRemoteChannelImage("");
   }, [userId, socket, incomingCall, stopRingtone, playSound]);
 
-  // Permission checking with detailed validation
   const canCallUser = useCallback(
     (targetUserId: string): CallPermissions => {
       console.log("🔍 Checking call permissions for:", targetUserId);
@@ -651,19 +623,15 @@ export const useWebRTC = ({
         return { canCall: false, reason: "Not connected to server" };
       }
 
-      // Check if user is online - THIS IS THE MAIN CHECK NOW
       const isUserOnline = onlineUsers.some((user) => user.id === targetUserId);
       if (!isUserOnline) {
         return { canCall: false, reason: "User is currently offline" };
       }
 
-      // REMOVED: Channel membership check - Users can call from ANY channel
-      // as long as they're online. This allows cross-channel calls.
-
       console.log("🎯 All call permission checks passed - User is online");
       return { canCall: true };
     },
-    [userId, callState, socket, onlineUsers]
+    [userId, callState, socket, onlineUsers],
   );
   const endCall = useCallback(
     (reason: string = "Call ended") => {
@@ -732,14 +700,14 @@ export const useWebRTC = ({
         });
       }
     },
-    [socket, userId, stopRingtone, playSound, currentChannel]
+    [socket, userId, stopRingtone, playSound, currentChannel],
   );
   const startCall = useCallback(
     async (
       recipientIds: string[],
       recipientData: { [key: string]: { username: string; image?: string } },
       audioOnly: boolean = false,
-      currentUserImage?: string
+      currentUserImage?: string,
     ): Promise<void> => {
       console.log("📞 Starting call to multiple users:", recipientIds);
       if (callState === "connected" && currentChannel?.id) {
@@ -752,17 +720,16 @@ export const useWebRTC = ({
           const permission = canCallUser(recipientId);
           if (!permission.canCall) {
             throw new Error(
-              permission.reason || `Cannot call user ${recipientId}`
+              permission.reason || `Cannot call user ${recipientId}`,
             );
           }
           const userData = recipientData[recipientId];
           const pc = createPeerConnection(
             recipientId,
             userData?.image,
-            userData?.username
+            userData?.username,
           );
 
-          // Store cleanup function
           const cleanup = pc;
         }
 
@@ -771,15 +738,12 @@ export const useWebRTC = ({
         setCallError("");
         setCallState("calling");
 
-        // Set channel info from currentChannel
         setRemoteChannelImage(currentChannel?.image || "");
         setRemoteChannelName(currentChannel?.name || "");
 
-        // FIX: Set remoteIsDMChannel based on currentChannel
         const isDMChannel = currentChannel?.isDM || false;
         setRemoteIsDMChannel(isDMChannel);
 
-        // FIX: Set remote image for DM calls
         if (isDMChannel && recipientIds.length === 1) {
           const userData = recipientData[recipientIds[0]];
           setRemoteImage(userData?.image || "");
@@ -795,7 +759,7 @@ export const useWebRTC = ({
           const pc = createPeerConnection(
             recipientId,
             userData?.image,
-            userData?.username
+            userData?.username,
           );
 
           const offer = await pc.createOffer({
@@ -813,7 +777,6 @@ export const useWebRTC = ({
             ? userData?.image || ""
             : currentChannel?.image || "";
 
-          // FIX: Send proper DM channel info
           socket!.emit("webrtc:call-offer", {
             from: userId,
             fromUsername: username,
@@ -821,12 +784,11 @@ export const useWebRTC = ({
             to: [recipientId],
             offer,
             audioOnly,
-            isChannelCall: !isDMChannel, // This should be true for non-DM calls
+            isChannelCall: !isDMChannel,
             channelId: currentChannel?.id,
-            // FIX: Always include these with proper values
             channelName: channelName,
             channelImage: channelImage,
-            isDMChannel: isDMChannel, // This is the key field you need
+            isDMChannel: isDMChannel,
           });
         }
 
@@ -859,10 +821,8 @@ export const useWebRTC = ({
       currentChannel,
       callState,
       endCall,
-    ]
+    ],
   );
-
-  // Update endCall to close all connections
 
   const sendSpeakingState = useCallback(
     (isSpeaking: boolean, targetUserId?: string) => {
@@ -875,17 +835,16 @@ export const useWebRTC = ({
                 type: "speaking",
                 isSpeaking: isSpeaking,
                 timestamp: Date.now(),
-              })
+              }),
             );
           } catch (error) {
             console.warn(
               `⚠️ Failed to send speaking state to ${targetUserId}:`,
-              error
+              error,
             );
           }
         }
       } else {
-        // Send to all connected data channels
         dataChannelsRef.current.forEach((dataChannel, userId) => {
           if (dataChannel.readyState === "open") {
             try {
@@ -894,19 +853,19 @@ export const useWebRTC = ({
                   type: "speaking",
                   isSpeaking: isSpeaking,
                   timestamp: Date.now(),
-                })
+                }),
               );
             } catch (error) {
               console.warn(
                 `⚠️ Failed to send speaking state to ${userId}:`,
-                error
+                error,
               );
             }
           }
         });
       }
     },
-    []
+    [],
   );
 
   const answerCall = useCallback(async (): Promise<void> => {
@@ -930,12 +889,10 @@ export const useWebRTC = ({
       setCallError("");
       stopRingtone();
 
-      // FIX: Set ALL remote data from incomingCall
       setRemoteUsername(incomingCall.fromUsername || "");
       setRemoteChannelImage(incomingCall.channelImage || "");
       setRemoteChannelName(incomingCall.channelName || "");
       setRemoteImage(incomingCall.fromImage || "");
-      // FIX: Make sure to use the isDMChannel from incomingCall
       setRemoteIsDMChannel(incomingCall.isDMChannel || false);
 
       console.log("🖼️ Setting channel info from incoming call:", {
@@ -950,13 +907,13 @@ export const useWebRTC = ({
       const pc = createPeerConnection(
         incomingCall.from,
         incomingCall.fromImage,
-        incomingCall.fromUsername
+        incomingCall.fromUsername,
       );
 
       if (incomingCall.offer) {
         isSettingRemoteRef.current = true;
         await pc.setRemoteDescription(
-          new RTCSessionDescription(incomingCall.offer)
+          new RTCSessionDescription(incomingCall.offer),
         );
         remoteDescriptionSetRef.current = true;
         isSettingRemoteRef.current = false;
@@ -966,7 +923,6 @@ export const useWebRTC = ({
         const answer = await pc.createAnswer();
         await pc.setLocalDescription(answer);
 
-        // FIX: Use isDMChannel from incoming call
         const isDMChannel = incomingCall.isDMChannel || false;
         socket!.emit("webrtc:call-answer", {
           from: userId,
@@ -974,7 +930,7 @@ export const useWebRTC = ({
           answer,
           fromUsername: username,
           fromImage: "",
-          isChannelCall: !isDMChannel, // This should be opposite of isDMChannel
+          isChannelCall: !isDMChannel,
           channelId: incomingCall.channelId,
         });
 
@@ -1005,14 +961,12 @@ export const useWebRTC = ({
     currentChannel,
   ]);
 
-  // Socket event handlers with proper cleanup
   useEffect(() => {
     if (!socket) return;
 
     const handleCallOffer = (data: CallData) => {
       console.log("📞 Incoming call offer from:", data.fromUsername);
 
-      // DEBUG: Log all incoming data
       console.log("📊 Incoming call data:", {
         isChannelCall: data.isChannelCall,
         channelId: data.channelId,
@@ -1022,32 +976,26 @@ export const useWebRTC = ({
         from: data.from,
       });
 
-      // CHANGED LOGIC: For channel calls, only show if user is in that channel
-      // For DM calls, always show (since DMs are direct between users)
       if (data.isChannelCall) {
         if (data.channelId !== currentChannel?.id) {
           console.log(
-            "⚠️ Ignoring channel call - user is not in the same channel"
+            "⚠️ Ignoring channel call - user is not in the same channel",
           );
           console.log(
-            `   Call channel: ${data.channelId}, User channel: ${currentChannel?.id}`
+            `   Call channel: ${data.channelId}, User channel: ${currentChannel?.id}`,
           );
           console.log(`   Channel name: ${data.channelName}`);
 
-          // Silently reject without showing modal
           if (socket.connected) {
             socket.emit("webrtc:call-reject", {
               from: userId,
               to: data.from,
-              silent: true, // Add this flag to indicate silent rejection
+              silent: true,
             });
           }
           return;
         }
       }
-
-      // For DM calls: always show (no channel restriction)
-      // For channel calls: we only reach here if user is in the right channel
 
       if (callState !== "idle") {
         console.log("⚠️ Ignoring call - already in call state:", callState);
@@ -1062,7 +1010,6 @@ export const useWebRTC = ({
 
       playRingtone("ringing");
 
-      // Set all data from incoming call
       setRemoteChannelImage(data.channelImage || "");
       setRemoteChannelName(data.channelName || "");
       setRemoteUsername(data.fromUsername || "");
@@ -1071,7 +1018,7 @@ export const useWebRTC = ({
 
       console.log(
         "🎯 Setting remoteIsDMChannel to:",
-        data.isDMChannel || false
+        data.isDMChannel || false,
       );
       console.log("✅ Showing call modal for:", {
         type: data.isDMChannel ? "DM Call" : "Channel Call",
@@ -1085,7 +1032,6 @@ export const useWebRTC = ({
       ringTimeoutRef.current = setTimeout(() => {
         console.log("⏰ Incoming call ring timeout - auto rejecting");
 
-        // Auto-reject the call
         if (socket?.connected) {
           socket.emit("webrtc:call-reject", {
             from: userId,
@@ -1138,19 +1084,15 @@ export const useWebRTC = ({
     };
 
     const handleIceCandidate = async (data: IceCandidateData) => {
-      // CHANGED: For channel calls, only process if user is in the same channel
       if (data.isChannelCall) {
         if (data.channelId !== currentChannel?.id) {
           console.log("⚠️ Ignoring ICE candidate - not in the same channel");
           console.log(
-            `   Call channel: ${data.channelId}, User channel: ${currentChannel?.id}`
+            `   Call channel: ${data.channelId}, User channel: ${currentChannel?.id}`,
           );
           return;
         }
       }
-
-      // For DM calls: always process (no channel restriction)
-      // For channel calls: only reach here if in same channel
 
       const pc = peerConnectionsRef.current.get(data.from!);
       if (!pc || !data.candidate) {
@@ -1170,27 +1112,23 @@ export const useWebRTC = ({
       } catch (error) {
         console.warn(
           `⚠️ Failed to add ICE candidate from ${data.from}:`,
-          error
+          error,
         );
         iceCandidateQueueRef.current.push(data.candidate);
       }
     };
 
-    // In useWebRTC - Modify the handleCallEnd function
     const handleCallEnd = (data: CallEndData) => {
       console.log("📞 Call ended by remote:", data.from);
 
-      // For DM calls: always process
-      // For channel calls: only process if in the same channel
       if (data.isChannelCall && data.channelId !== currentChannel?.id) {
         console.log("⚠️ Ignoring call end - not in the same channel");
         console.log(
-          `   End call channel: ${data.channelId}, User channel: ${currentChannel?.id}`
+          `   End call channel: ${data.channelId}, User channel: ${currentChannel?.id}`,
         );
         return;
       }
 
-      // For DM calls - always end
       if (!data.isChannelCall) {
         console.log("📞 DM call ended - normal cleanup");
         const pc = peerConnectionsRef.current.get(data.from);
@@ -1207,7 +1145,6 @@ export const useWebRTC = ({
         return;
       }
 
-      // For channel calls - only end if in the same channel
       console.log("📞 Channel call ended - cleaning up");
       const pc = peerConnectionsRef.current.get(data.from);
       if (pc) {
@@ -1263,7 +1200,6 @@ export const useWebRTC = ({
     currentChannel,
   ]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       console.log("🧹 Cleaning up WebRTC hook");
@@ -1271,13 +1207,10 @@ export const useWebRTC = ({
       cleanup();
     };
   }, [endCall, cleanup]);
-  // In your parent component or where useWebRTC is used
 
-  // Return public API
   return {
-    // State
     callState,
-    remoteStreams, // Changed from remoteStream to remoteStreams
+    remoteStreams,
     incomingCall,
     callError,
     remoteUsername,
@@ -1287,11 +1220,9 @@ export const useWebRTC = ({
     remoteIsDMChannel,
     isAudioOnly,
 
-    // Refs
     localVideoRef,
     remoteVideoRef,
 
-    // Methods
     isRemoteSpeaking,
     isLocalSpeaking,
     sendSpeakingState,
@@ -1304,14 +1235,12 @@ export const useWebRTC = ({
     connectionStatuses,
     canCallUser,
 
-    // Derived state
     isInCall:
       callState === "calling" ||
       callState === "ringing" ||
       callState === "connected",
     isConnected: callState === "connected",
 
-    // New properties for multiple users
     peerConnections: peerConnectionsRef.current,
     activeParticipants: Array.from(remoteStreamsRef.current.keys()),
   };

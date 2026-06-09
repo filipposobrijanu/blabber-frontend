@@ -1,6 +1,3 @@
-// termsTranslations.ts
-
-// Define the type for Terms of Service translation keys
 export type TermsTranslationKeys = {
   termsOfService: string;
   lastUpdated: string;
@@ -29,10 +26,8 @@ export type TermsTranslationKeys = {
   privacyPolicy: string;
 };
 
-// Define the type for language codes
 export type TermsLanguageCode = "us" | "gr" | "ru" | "md" | "es" | "fr" | "de";
 
-// Define the translations object with proper typing
 export const termsTranslations: Record<
   TermsLanguageCode,
   TermsTranslationKeys

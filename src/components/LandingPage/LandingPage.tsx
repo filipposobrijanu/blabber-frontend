@@ -79,7 +79,6 @@ const WindowsIcon = memo(() => (
 
 WindowsIcon.displayName = "WindowsIcon";
 
-// Memoized BrowserIcon component
 const BrowserIcon = memo(() => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +94,6 @@ const BrowserIcon = memo(() => (
 
 BrowserIcon.displayName = "BrowserIcon";
 
-// Memoized Header component
 const Header = memo(
   ({
     onSkipToApp,
@@ -123,12 +121,11 @@ const Header = memo(
         {loginButton}
       </button>
     </header>
-  )
+  ),
 );
 
 Header.displayName = "Header";
 
-// Memoized Stats component
 const Stats = memo(
   ({
     activeUsers,
@@ -165,12 +162,11 @@ const Stats = memo(
         )}
       </div>
     </div>
-  )
+  ),
 );
 
 Stats.displayName = "Stats";
 
-// Memoized Footer component
 const Footer = memo(() => (
   <footer className="landing-footer">
     <p className="footer-copyright">
@@ -181,7 +177,6 @@ const Footer = memo(() => (
 
 Footer.displayName = "Footer";
 
-// Memoized DownloadModal component
 interface DownloadModalProps {
   isNoDownloadClosing: boolean;
   showNoDownload: boolean;
@@ -197,7 +192,7 @@ const DownloadModal = memo<DownloadModalProps>(
           onClose();
         }
       },
-      [onClose]
+      [onClose],
     );
 
     if (!showNoDownload) return null;
@@ -233,10 +228,10 @@ const DownloadModal = memo<DownloadModalProps>(
               isAndroid
                 ? "glass-popup-android"
                 : isIOS
-                ? "glass-popup-ios"
-                : isWindows
-                ? "glass-popup-windows"
-                : "glass-popup-windows"
+                  ? "glass-popup-ios"
+                  : isWindows
+                    ? "glass-popup-windows"
+                    : "glass-popup-windows"
             } rounded-5 m-0 mt-1 py-3 mt-md-0`}
             style={modalStyle}
           >
@@ -274,12 +269,11 @@ const DownloadModal = memo<DownloadModalProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 DownloadModal.displayName = "DownloadModal";
 
-// Main LandingPage component
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [hasVisitedBefore, setHasVisitedBefore] = useState(false);
@@ -289,16 +283,14 @@ export const LandingPage: React.FC = () => {
   const [isNoDownloadClosing, setIsNoDownloadClosing] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Memoize translations
   const t = useMemo(
     () =>
       LandingPageTranslations[
         selectedLanguage.code as keyof typeof LandingPageTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // Memoize animation variants
   const containerVariants = useMemo(
     () => ({
       hidden: { opacity: 0 },
@@ -311,10 +303,9 @@ export const LandingPage: React.FC = () => {
         },
       },
     }),
-    []
+    [],
   );
 
-  // Memoize handlers
   const handleGetStarted = useCallback(() => {
     localStorage.setItem("hasVisitedLanding", "true");
     navigate("/login");
@@ -339,7 +330,6 @@ export const LandingPage: React.FC = () => {
     }
   }, [showNoDownload, isNoDownloadClosing]);
 
-  // Check if user has visited before
   useEffect(() => {
     const visited = localStorage.getItem("hasVisitedLanding");
     if (visited === "true") {
@@ -348,7 +338,6 @@ export const LandingPage: React.FC = () => {
     }
   }, [navigate]);
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -358,7 +347,6 @@ export const LandingPage: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Handle loading skeleton
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoadingSkeleton(false);
@@ -367,16 +355,13 @@ export const LandingPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Calculate responsive values
   const isMobile = windowWidth < 768;
   const browserButtonText = isMobile ? t.openInBrowserSmall : t.openInBrowser;
 
-  // If has visited before, redirect will happen in useEffect
   if (hasVisitedBefore) {
     return null;
   }
 
-  // Loading skeleton (optional)
   if (isLoadingSkeleton) {
     return (
       <div style={{ position: "relative", minHeight: "100vh" }}>

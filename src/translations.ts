@@ -1,6 +1,3 @@
-// translations.ts
-
-// Define the type for translation keys
 export type TranslationKeys = {
   settings: string;
   profile: string;
@@ -57,10 +54,8 @@ export type TranslationKeys = {
   audioVideo: string;
 };
 
-// Define the type for language codes
 export type LanguageCode = "us" | "gr" | "ru" | "md" | "es" | "fr" | "de";
 
-// Define the translations object with proper typing
 export const translations: Record<LanguageCode, TranslationKeys> = {
   us: {
     audioVideo: "Audio & Video",

@@ -1,4 +1,3 @@
-// context/ShopContext.tsx
 import React, {
   createContext,
   useEffect,
@@ -53,7 +52,6 @@ interface ShopContextProviderProps {
   children: ReactNode;
 }
 
-// Memoize languages array since it never changes
 const LANGUAGES: Language[] = [
   { code: "us", name: "English" },
   { code: "gr", name: "Greek" },
@@ -66,10 +64,9 @@ const LANGUAGES: Language[] = [
 
 const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
   (props) => {
-    // Initialize state with localStorage values
     const [selectedLanguage, setSelectedLanguage] = useState<Language>(() => {
       const savedLang = localStorage.getItem("selectedLanguage");
-      return savedLang ? JSON.parse(savedLang) : LANGUAGES[0]; // Default to English
+      return savedLang ? JSON.parse(savedLang) : LANGUAGES[0];
     });
 
     const [menu, setMenu] = useState<string>(() => {
@@ -77,7 +74,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
     });
 
     const [selectedChannel, setSelectedChannel] = useState<any | null>(
-      "friends"
+      "friends",
     );
     const [selectedChannelImage, setSelectedChannelImage] =
       useState<string>("");
@@ -85,17 +82,15 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
     const [activeMainBut, setActiveMainBut] = useState(true);
     const [pageTitle, setPageTitle] = useState("Blabber - Login");
 
-    // Chat states
     const [currentChannel, setCurrentChannel] = useState<any | null>(null);
     const [messages, setMessages] = useState<any[]>([]);
     const [channels, setChannels] = useState<any[]>([]);
     const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
 
-    // IP detection function
     const detectUserLanguage = useCallback(async () => {
       try {
         const response = await fetch(
-          "https://api.geoapify.com/v1/ipinfo?&apiKey=754c58382b374503b231cc3b96910862"
+          "https://api.geoapify.com/v1/ipinfo?&apiKey=754c58382b374503b231cc3b96910862",
         );
 
         if (!response.ok) return;
@@ -105,25 +100,24 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
 
         console.log("Detected country:", countryCode);
 
-        // Map country codes to language codes
         const countryToLanguage: Record<string, string> = {
-          gr: "gr", // Greece -> Greek
-          ru: "ru", // Russia -> Russian
-          md: "md", // Moldova -> Romanian
-          ro: "md", // Romania -> Romanian
-          es: "es", // Spain -> Spanish // ADD THIS LINE
-          fr: "fr", // France -> French // ADD THIS LINE
-          de: "de", // Germany -> German // ADD THIS LINE
-          at: "de", // Austria -> German // ADD THIS LINE
-          ch: "de", // Switzerland -> German // ADD THIS LINE
-          // Add more mappings as needed
+          gr: "gr",
+          ru: "ru",
+          md: "md",
+          ro: "md",
+          es: "es",
+          fr: "fr",
+          de: "de",
+          at: "de",
+          ch: "de",
+          E,
         };
 
         const detectedLanguageCode = countryToLanguage[countryCode];
 
         if (detectedLanguageCode) {
           const detectedLanguage = LANGUAGES.find(
-            (lang) => lang.code === detectedLanguageCode
+            (lang) => lang.code === detectedLanguageCode,
           );
           if (detectedLanguage) {
             setSelectedLanguage(detectedLanguage);
@@ -135,16 +129,13 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
       }
     }, []);
 
-    // Auto-detect language on component mount
     useEffect(() => {
-      // Only auto-detect if no language is saved in localStorage
       const savedLang = localStorage.getItem("selectedLanguage");
       if (!savedLang) {
         detectUserLanguage();
       }
     }, [detectUserLanguage]);
 
-    // Memoized setters to prevent unnecessary re-renders
     const memoizedSetSelectedLanguage = useCallback((language: Language) => {
       setSelectedLanguage(language);
     }, []);
@@ -177,14 +168,14 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
       (messages: any[] | ((prev: any[]) => any[])) => {
         setMessages(messages);
       },
-      []
+      [],
     );
 
     const memoizedSetChannels = useCallback(
       (channels: any[] | ((prev: any[]) => any[])) => {
         setChannels(channels);
       },
-      []
+      [],
     );
 
     const memoizedSetOnlineUsers = useCallback((users: User[]) => {
@@ -195,12 +186,11 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
       setPageTitle(title);
     }, []);
 
-    // Persist selectedLanguage - use callback to avoid recreating on every render
     useEffect(() => {
       if (selectedLanguage) {
         localStorage.setItem(
           "selectedLanguage",
-          JSON.stringify(selectedLanguage)
+          JSON.stringify(selectedLanguage),
         );
       }
     }, [selectedLanguage]);
@@ -215,14 +205,12 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
         document.removeEventListener("contextmenu", handleContextMenu);
       };
     }, []);
-    // Persist menu
     useEffect(() => {
       if (menu) {
         localStorage.setItem("menu", menu);
       }
     }, [menu]);
 
-    // Memoize the entire context value to prevent unnecessary re-renders
     const contextValue: ShopContextType = useMemo(
       () => ({
         menu,
@@ -271,7 +259,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
         memoizedSetChannels,
         memoizedSetOnlineUsers,
         memoizedSetPageTitle,
-      ]
+      ],
     );
 
     return (
@@ -279,7 +267,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = React.memo(
         {props.children}
       </ShopContext.Provider>
     );
-  }
+  },
 );
 
 export const useShopContext = () => {

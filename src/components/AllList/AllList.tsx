@@ -14,7 +14,6 @@ interface AllListProps {
   onStartDM: (userId: string) => void;
 }
 
-// Memoized UserItem component
 const UserItem = memo(
   ({
     user,
@@ -32,11 +31,11 @@ const UserItem = memo(
     const handleMouseLeave = useCallback(() => setIsHovered(false), []);
     const handleButtonMouseEnter = useCallback(
       () => setIsButtonHovered(true),
-      []
+      [],
     );
     const handleButtonMouseLeave = useCallback(
       () => setIsButtonHovered(false),
-      []
+      [],
     );
 
     const handleDMClick = useCallback(
@@ -44,16 +43,16 @@ const UserItem = memo(
         e.stopPropagation();
         onStartDM(user.id);
       },
-      [onStartDM, user.id]
+      [onStartDM, user.id],
     );
 
     const userImage = useMemo(
       () =>
         user.image ||
         `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user.username || "User"
+          user.username || "User",
         )}&background=random`,
-      [user.image, user.username]
+      [user.image, user.username],
     );
 
     const badgeStyle = useMemo(
@@ -62,7 +61,7 @@ const UserItem = memo(
           ? "rgba(32, 185, 45, 0.2)"
           : "rgba(108, 117, 125, 0.2)",
       }),
-      [user.isOnline]
+      [user.isOnline],
     );
 
     return (
@@ -179,12 +178,11 @@ const UserItem = memo(
         </button>
       </div>
     );
-  }
+  },
 );
 
 UserItem.displayName = "UserItem";
 
-// Memoized Skeleton component
 const AllListSkeleton = memo(() => {
   const skeletons = useMemo(() => Array.from({ length: 4 }), []);
 
@@ -261,7 +259,6 @@ const AllListSkeleton = memo(() => {
 
 AllListSkeleton.displayName = "AllListSkeleton";
 
-// Memoized EmptyState component
 const EmptyState = memo(
   ({
     t,
@@ -291,7 +288,7 @@ const EmptyState = memo(
         <p className="text-white m-0 small px-2">{t.noUsersFound}</p>
       </div>
     </div>
-  )
+  ),
 );
 
 EmptyState.displayName = "EmptyState";
@@ -332,7 +329,7 @@ const ErrorState = memo(
         </div>
       </div>
     </div>
-  )
+  ),
 );
 
 ErrorState.displayName = "ErrorState";
@@ -343,21 +340,18 @@ export const AllList: React.FC<AllListProps> = ({ onStartDM }) => {
   const { selectedLanguage } = useShopContext();
   const { friends, refreshFriends } = useFriends();
 
-  // Memoize translation
   const t = useMemo(
     () =>
       allListTranslations[
         selectedLanguage.code as keyof typeof allListTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // Optimized user friends transformation
   const userFriends = useMemo(() => {
     const transformedFriends: User[] = [];
 
     for (const friend of friends) {
-      // Extract friend data based on type
       let friendId: string;
       let friendUsername: string;
       let friendImage: string;
@@ -379,18 +373,17 @@ export const AllList: React.FC<AllListProps> = ({ onStartDM }) => {
       transformedFriends.push({
         id: friendId,
         username: friendUsername,
-        email: "", // Default empty email
-        image: friendImage, // Now always a string (empty string if undefined)
+        email: "",
+        image: friendImage,
         isOnline,
-        dateOfBirth: new Date(), // Required field
-        currentChannelId: "1", // Default channel
+        dateOfBirth: new Date(),
+        currentChannelId: "1",
       });
     }
 
     return transformedFriends;
   }, [friends]);
 
-  // Memoize the fetch function
   const fetchAllUsers = useCallback(async () => {
     let mounted = true;
 
@@ -414,29 +407,25 @@ export const AllList: React.FC<AllListProps> = ({ onStartDM }) => {
     }
   }, [refreshFriends, t.failedToLoadUsers]);
 
-  // Container style
   const containerStyle = useMemo(
     () => ({
       height: "100%",
       overflowY: "auto" as const,
     }),
-    []
+    [],
   );
 
-  // Memoize retry handler
   const handleRetry = useCallback(() => {
     fetchAllUsers();
   }, [fetchAllUsers]);
 
-  // Memoize DM handler
   const handleStartDM = useCallback(
     (userId: string) => {
       onStartDM(userId);
     },
-    [onStartDM]
+    [onStartDM],
   );
 
-  // Initial data fetch
   useEffect(() => {
     let mounted = true;
 
@@ -468,17 +457,14 @@ export const AllList: React.FC<AllListProps> = ({ onStartDM }) => {
     };
   }, [refreshFriends, t.failedToLoadUsers]);
 
-  // Loading state
   if (isLoadingSkeleton) {
     return <AllListSkeleton />;
   }
 
-  // Error state
   if (error) {
     return <ErrorState error={error} onRetry={handleRetry} t={t} />;
   }
 
-  // Empty state
   if (userFriends.length === 0) {
     return <EmptyState t={t} />;
   }

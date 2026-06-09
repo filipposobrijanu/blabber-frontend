@@ -1,6 +1,3 @@
-// loginTranslations.ts
-
-// Define the type for Login translation keys
 export type LoginTranslationKeys = {
   welcomeBack: string;
   happyToSeeYouAgain: string;
@@ -41,10 +38,8 @@ export type LoginTranslationKeys = {
   or: string;
 };
 
-// Define the type for language codes
 export type LoginLanguageCode = "us" | "gr" | "ru" | "md" | "es" | "fr" | "de";
 
-// Define the translations object with proper typing
 export const loginTranslations: Record<
   LoginLanguageCode,
   LoginTranslationKeys
@@ -92,9 +87,9 @@ export const loginTranslations: Record<
     failedToSendInstructions: "Failed to send reset instructions",
   },
   gr: {
-    signUpWithGoogle: "Εγγραφή με Google", // ΑΛΛΑΓΗ
-    continueWithGoogle: "Συνέχεια με Google", // ΑΛΛΑΓΗ
-    or: "Ή", // ΑΛΛΑΓΗ
+    signUpWithGoogle: "Εγγραφή με Google",
+    continueWithGoogle: "Συνέχεια με Google",
+    or: "Ή",
     welcomeBack: "Καλώς ήρθες πίσω!",
     happyToSeeYouAgain: "Είμαστε πολύ χαρούμενοι που σε ξαναβλέπουμε!",
     emailAddress: "Διεύθυνση Email *",
@@ -134,9 +129,9 @@ export const loginTranslations: Record<
     failedToSendInstructions: "Αποτυχία αποστολής οδηγιών επαναφοράς",
   },
   ru: {
-    signUpWithGoogle: "Зарегистрироваться через Google", // ΑΛΛΑΓΗ
-    continueWithGoogle: "Продолжить с Google", // ΑΛΛΑΓΗ
-    or: "Или", // ΑΛΛΑΓΗ
+    signUpWithGoogle: "Зарегистрироваться через Google",
+    continueWithGoogle: "Продолжить с Google",
+    or: "Или",
     welcomeBack: "Добро пожаловать обратно!",
     happyToSeeYouAgain: "Мы очень рады вас видеть снова!",
     emailAddress: "Адрес электронной почты *",
@@ -176,9 +171,9 @@ export const loginTranslations: Record<
     failedToSendInstructions: "Ошибка отправки инструкций по сбросу",
   },
   md: {
-    signUpWithGoogle: "Înregistrare cu Google", // ΑΛΛΑΓΗ
-    continueWithGoogle: "Continuă cu Google", // ΑΛΛΑΓΗ
-    or: "Sau", // ΑΛΛΑΓΗ
+    signUpWithGoogle: "Înregistrare cu Google",
+    continueWithGoogle: "Continuă cu Google",
+    or: "Sau",
     welcomeBack: "Bine ai revenit!",
     happyToSeeYouAgain: "Suntem foarte bucuroși să te revenim!",
     emailAddress: "Adresă de email *",

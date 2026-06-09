@@ -1,11 +1,6 @@
 import { useCallback, useRef } from "react";
 
-type SoundType =
-  | "calling" // Outgoing call ringing
-  | "ringing" // Incoming call ringing
-  | "connected" // Call connected/answered
-  | "ended" // Call ended
-  | "error"; // Call error/rejected
+type SoundType = "calling" | "ringing" | "connected" | "ended" | "error";
 
 interface SoundUrls {
   calling: string;
@@ -19,30 +14,25 @@ export const useCallSounds = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ringtoneIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Default sound URLs from free CDN sources
-  // You can replace these with your own hosted URLs
   const defaultSounds: SoundUrls = {
     calling:
-      "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3", // Phone calling tone
-    ringing: "https://assets.mixkit.co/active_storage/sfx/933/933-preview.mp3", // Ringing tone
+      "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3",
+    ringing: "https://assets.mixkit.co/active_storage/sfx/933/933-preview.mp3",
     connected:
-      "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3", // Connected beep
-    ended: "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3", // End beep
-    error: "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3", // Error sound
+      "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3",
+    ended: "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3",
+    error: "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3",
   };
 
-  // Play a single sound effect
   const playSound = useCallback((soundType: SoundType, soundUrl?: string) => {
     try {
-      // Stop any currently playing sound
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
 
-      // Create new audio element
       const audio = new Audio(soundUrl || defaultSounds[soundType]);
-      audio.volume = 0.5; // Set volume to 50%
+      audio.volume = 0.5;
       audio.play().catch((err) => {
         console.warn(`Failed to play ${soundType} sound:`, err);
       });
@@ -53,16 +43,14 @@ export const useCallSounds = () => {
     }
   }, []);
 
-  // Play ringtone in a loop (for incoming/outgoing calls)
   const playRingtone = useCallback(
     (soundType: "calling" | "ringing", soundUrl?: string) => {
       try {
-        // Stop any current ringtone
         stopRingtone();
 
         const audio = new Audio(soundUrl || defaultSounds[soundType]);
         audio.volume = 0.6;
-        audio.loop = true; // Loop the ringtone
+        audio.loop = true;
         audio.play().catch((err) => {
           console.warn(`Failed to play ringtone:`, err);
         });
@@ -74,10 +62,9 @@ export const useCallSounds = () => {
         console.error("Error playing ringtone:", error);
       }
     },
-    []
+    [],
   );
 
-  // Stop any playing sound
   const stopRingtone = useCallback(() => {
     try {
       if (audioRef.current) {
@@ -96,7 +83,6 @@ export const useCallSounds = () => {
     }
   }, []);
 
-  // Cleanup on unmount
   const cleanup = useCallback(() => {
     stopRingtone();
     if (audioRef.current) {

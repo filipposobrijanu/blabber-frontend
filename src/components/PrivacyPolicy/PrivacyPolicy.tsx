@@ -4,7 +4,6 @@ import objects from "../../assets/3dobjects.png";
 import { privacyTranslations } from "./PrivacyPolicyTranslations";
 import { useShopContext } from "../../hooks/useShopContext";
 
-// Memoized Background component
 const Background = memo(() => (
   <div
     style={{
@@ -27,7 +26,6 @@ const Background = memo(() => (
 
 Background.displayName = "Background";
 
-// Memoized SkeletonLoader component
 const SkeletonLoader = memo(() => {
   const skeletonItems = useMemo(() => Array.from({ length: 8 }), []);
 
@@ -144,7 +142,6 @@ const SkeletonLoader = memo(() => {
 
 SkeletonLoader.displayName = "SkeletonLoader";
 
-// Memoized PrivacyContent component
 interface PrivacyContentProps {
   t: (typeof privacyTranslations)[keyof typeof privacyTranslations];
   currentDate: string;
@@ -157,7 +154,7 @@ const PrivacyContent = memo<PrivacyContentProps>(({ t, currentDate }) => {
       fontSize: "14px",
       paddingLeft: "20px",
     }),
-    []
+    [],
   );
 
   const paragraphStyle = useMemo(
@@ -165,7 +162,7 @@ const PrivacyContent = memo<PrivacyContentProps>(({ t, currentDate }) => {
       color: "#ffffffa8",
       fontSize: "14px",
     }),
-    []
+    [],
   );
 
   return (
@@ -247,7 +244,6 @@ const PrivacyContent = memo<PrivacyContentProps>(({ t, currentDate }) => {
 
 PrivacyContent.displayName = "PrivacyContent";
 
-// Memoized ActionButtons component
 interface ActionButtonsProps {
   t: (typeof privacyTranslations)[keyof typeof privacyTranslations];
   onNavigateLogin: () => void;
@@ -270,12 +266,11 @@ const ActionButtons = memo<ActionButtonsProps>(
         {t.termsOfService}
       </button>
     </div>
-  )
+  ),
 );
 
 ActionButtons.displayName = "ActionButtons";
 
-// Memoized Header component
 interface HeaderProps {
   t: (typeof privacyTranslations)[keyof typeof privacyTranslations];
   currentDate: string;
@@ -304,7 +299,6 @@ const Header = memo<HeaderProps>(({ t, currentDate }) => (
 
 Header.displayName = "Header";
 
-// Main PrivacyPolicy component
 export const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate();
   const [isLoadingSkeleton, setIsLoadingSkeleton] = useState(true);
@@ -316,13 +310,11 @@ export const PrivacyPolicy: React.FC = () => {
       privacyTranslations[
         selectedLanguage.code as keyof typeof privacyTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // Memoize the date
   const currentDate = useMemo(() => new Date().toLocaleDateString(), []);
 
-  // Memoize navigation handlers
   const handleNavigateLogin = useCallback(() => {
     navigate("/login");
   }, [navigate]);
@@ -331,7 +323,6 @@ export const PrivacyPolicy: React.FC = () => {
     navigate("/tos");
   }, [navigate]);
 
-  // Effects with cleanup
   useEffect(() => {
     document.title = `Blabber - ${t.privacyPolicy}`;
   }, [t.privacyPolicy]);
@@ -351,7 +342,6 @@ export const PrivacyPolicy: React.FC = () => {
     };
   }, []);
 
-  // Loading state
   if (isLoadingSkeleton) {
     return <SkeletonLoader />;
   }

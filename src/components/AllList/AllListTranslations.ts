@@ -1,6 +1,3 @@
-// allListTranslations.ts
-
-// Define the type for All List translation keys
 export type AllListTranslationKeys = {
   allFriends: string;
   online: string;
@@ -8,10 +5,9 @@ export type AllListTranslationKeys = {
   noUsersFound: string;
   failedToLoadUsers: string;
   retry: string;
-  message: string; // Added Message translation
+  message: string;
 };
 
-// Define the type for language codes
 export type AllListLanguageCode =
   | "us"
   | "gr"
@@ -21,7 +17,6 @@ export type AllListLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const allListTranslations: Record<
   AllListLanguageCode,
   AllListTranslationKeys

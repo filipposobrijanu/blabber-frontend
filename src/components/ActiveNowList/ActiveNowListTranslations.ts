@@ -1,6 +1,3 @@
-// activeNowTranslations.ts
-
-// Define the type for Active Now List translation keys
 export type ActiveNowTranslationKeys = {
   online: string;
   onlineStatus: string;
@@ -9,7 +6,6 @@ export type ActiveNowTranslationKeys = {
   message: string;
 };
 
-// Define the type for language codes
 export type ActiveNowLanguageCode =
   | "us"
   | "gr"
@@ -19,7 +15,6 @@ export type ActiveNowLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const activeNowTranslations: Record<
   ActiveNowLanguageCode,
   ActiveNowTranslationKeys

@@ -1,4 +1,3 @@
-// hooks/useRealTimeSpeakingDetector.ts
 import { useState, useEffect, useRef, useCallback } from "react";
 
 interface UseRealTimeSpeakingDetectorProps {
@@ -24,9 +23,8 @@ export const useRealTimeSpeakingDetector = ({
   >(null);
   const animationFrameRef = useRef<number>(0);
   const lastSpeakingStateRef = useRef<boolean>(false);
-  const isSpeakingRef = useRef<boolean>(false); // FIX: Track speaking state in ref
+  const isSpeakingRef = useRef<boolean>(false);
 
-  // Debounced speaking state sender
   const debouncedSendSpeakingState = useCallback(
     (speaking: boolean) => {
       if (lastSpeakingStateRef.current !== speaking) {
@@ -42,11 +40,10 @@ export const useRealTimeSpeakingDetector = ({
         }
       }
     },
-    [isLocal, sendSpeakingState, onSpeakingStateChange]
+    [isLocal, sendSpeakingState, onSpeakingStateChange],
   );
 
   useEffect(() => {
-    // Cleanup previous instances
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
@@ -58,17 +55,14 @@ export const useRealTimeSpeakingDetector = ({
     }
 
     setIsSpeaking(false);
-    isSpeakingRef.current = false; // FIX: Reset ref too
+    isSpeakingRef.current = false;
     lastSpeakingStateRef.current = false;
 
     let audioSource: MediaStream | HTMLMediaElement | null = null;
 
-    // Priority 1: Use MediaStream if available and has audio tracks
     if (stream && stream.getAudioTracks().length > 0) {
       audioSource = stream;
-    }
-    // Priority 2: Use audio element (for remote audio in audio-only calls)
-    else if (audioElement) {
+    } else if (audioElement) {
       audioSource = audioElement;
     }
 
@@ -79,7 +73,7 @@ export const useRealTimeSpeakingDetector = ({
 
     console.log(
       "🎤 Starting real-time audio detection for",
-      isLocal ? "local" : "remote"
+      isLocal ? "local" : "remote",
     );
 
     try {
@@ -94,7 +88,6 @@ export const useRealTimeSpeakingDetector = ({
       analyser.maxDecibels = -10;
       analyserRef.current = analyser;
 
-      // Create source based on type
       if (audioSource instanceof MediaStream) {
         sourceRef.current =
           audioContextRef.current.createMediaStreamSource(audioSource);
@@ -116,37 +109,30 @@ export const useRealTimeSpeakingDetector = ({
 
         analyserRef.current.getByteFrequencyData(dataArray);
 
-        // Calculate average volume
         let sum = 0;
         for (let i = 0; i < dataArray.length; i++) {
           sum += dataArray[i];
         }
         const average = sum / dataArray.length;
 
-        // Adjust thresholds - higher for local audio (echo cancellation)
         const speakingThreshold = isLocal ? 25 : 20;
         const isCurrentlySpeaking = average > speakingThreshold;
 
-        // Add hysteresis to prevent flickering
         if (isCurrentlySpeaking) {
           silenceCounter = 0;
           speakingCounter++;
 
-          // FIX: Use ref instead of state in callback
           if (speakingCounter >= SPEAKING_THRESHOLD && !isSpeakingRef.current) {
             console.log("🎤 Speaking detected, level:", average.toFixed(2));
-            isSpeakingRef.current = true; // Update ref first
-            setIsSpeaking(true);
+            isSpeakingRef.current = true;
             debouncedSendSpeakingState(true);
           }
         } else {
           speakingCounter = 0;
           silenceCounter++;
-
-          // FIX: Use ref instead of state in callback
           if (silenceCounter >= SILENCE_THRESHOLD && isSpeakingRef.current) {
             console.log("🎤 Silence detected");
-            isSpeakingRef.current = false; // Update ref first
+            isSpeakingRef.current = false;
             setIsSpeaking(false);
             debouncedSendSpeakingState(false);
           }
@@ -155,7 +141,6 @@ export const useRealTimeSpeakingDetector = ({
         animationFrameRef.current = requestAnimationFrame(checkAudioLevel);
       };
 
-      // Start detection with small delay
       const startTimeout = setTimeout(() => {
         animationFrameRef.current = requestAnimationFrame(checkAudioLevel);
       }, 100);

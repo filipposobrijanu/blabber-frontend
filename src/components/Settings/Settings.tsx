@@ -20,7 +20,6 @@ interface SettingsProps {
   user: User;
   onUpdateUser?: (updatedUser: User) => void;
 }
-// ADD THIS after the LANGUAGES array in Settings.tsx
 const FLAGS = {
   us: (
     <svg
@@ -226,7 +225,6 @@ const FLAGS = {
     </svg>
   ),
 };
-// Memoize the skeleton component to prevent unnecessary re-renders
 const SettingsSkeleton = React.memo(() => {
   const skeletonItems = useMemo(() => Array.from({ length: 2 }), []);
 
@@ -428,7 +426,6 @@ const CustomSelect: React.FC<{
     setIsOpen(false);
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -565,7 +562,6 @@ const CustomSelect: React.FC<{
     </div>
   );
 });
-// Background component to avoid recreating the style object on every render
 const Background = React.memo(() => (
   <div
     style={{
@@ -594,7 +590,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
       () => ({
         background: "rgba(255, 255, 255, 0.1)",
       }),
-      []
+      [],
     );
 
     const navigate = useNavigate();
@@ -605,7 +601,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
     >("profile");
     const handleSetAudioVideoTab = useCallback(
       () => setActiveTab("audio-video"),
-      []
+      [],
     );
 
     const [username, setUsername] = useState(user.username);
@@ -619,14 +615,12 @@ export const Settings: React.FC<SettingsProps> = React.memo(
       text: string;
     } | null>(null);
     const [selectedTheme, setSelectedTheme] = useState<"dark" | "light">(
-      "dark"
+      "dark",
     );
     const [isLoadingSkeleton, setIsLoadingSkeleton] = useState(true);
 
-    // Danger zone state
     const [confirmDelete, setConfirmDelete] = useState("");
 
-    // CHANGE THE LANGUAGES ARRAY - remove the SVG components
     const LANGUAGES = [
       { code: "us", name: "English" },
       { code: "gr", name: "Greek" },
@@ -640,10 +634,8 @@ export const Settings: React.FC<SettingsProps> = React.memo(
 
     const t = translations[selectedLanguage.code as keyof typeof translations];
 
-    // Memoize API URL
     const apiUrl = useMemo(() => API_URL, [API_URL]);
 
-    // Memoize user data to prevent unnecessary effects
     const userData = useMemo(
       () => ({
         id: user.id,
@@ -651,7 +643,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         email: user.email,
         image: user.image,
       }),
-      [user.id, user.username, user.email, user.image]
+      [user.id, user.username, user.email, user.image],
     );
 
     useEffect(() => {
@@ -666,16 +658,14 @@ export const Settings: React.FC<SettingsProps> = React.memo(
       return () => clearTimeout(timer);
     }, []);
 
-    // Memoized message handler
     const showMessage = useCallback(
       (type: "success" | "error", text: string) => {
         setMessage({ type, text });
         setTimeout(() => setMessage(null), 5000);
       },
-      []
+      [],
     );
 
-    // Memoized form handlers
     const handleSaveProfile = useCallback(
       async (e: React.FormEvent) => {
         e.preventDefault();
@@ -699,7 +689,6 @@ export const Settings: React.FC<SettingsProps> = React.memo(
             throw new Error(data.error || t.failedToUpdateProfile);
           }
 
-          // Update local state and context
           const updatedUser = { ...user, username, email };
           if (onUpdateUser) {
             onUpdateUser(updatedUser);
@@ -713,7 +702,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
           setIsSaving(false);
         }
       },
-      [username, email, userData, onUpdateUser, showMessage, apiUrl, t]
+      [username, email, userData, onUpdateUser, showMessage, apiUrl, t],
     );
 
     const handleChangePassword = useCallback(
@@ -766,7 +755,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         showMessage,
         apiUrl,
         t,
-      ]
+      ],
     );
 
     const handleAvatarChange = useCallback(
@@ -774,7 +763,6 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         const file = event.target.files?.[0];
         if (!file) return;
 
-        // Convert file to base64
         const reader = new FileReader();
         reader.onloadend = async () => {
           const base64Image = reader.result as string;
@@ -795,7 +783,6 @@ export const Settings: React.FC<SettingsProps> = React.memo(
               throw new Error(data.message || t.failedToUploadAvatar);
             }
 
-            // Update local state and context
             const updatedUser = { ...user, image: data.image_url };
             if (onUpdateUser) {
               onUpdateUser(updatedUser);
@@ -810,7 +797,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
 
         reader.readAsDataURL(file);
       },
-      [userData, onUpdateUser, showMessage, apiUrl, t]
+      [userData, onUpdateUser, showMessage, apiUrl, t],
     );
 
     const handleDeleteAccount = useCallback(
@@ -846,7 +833,6 @@ export const Settings: React.FC<SettingsProps> = React.memo(
 
           showMessage("success", data.message || t.accountDeletedSuccessfully);
 
-          // Redirect to login or home page after deletion
           setTimeout(() => {
             localStorage.clear();
             window.location.href = "/";
@@ -858,17 +844,16 @@ export const Settings: React.FC<SettingsProps> = React.memo(
           setIsSaving(false);
         }
       },
-      [confirmDelete, userData.id, showMessage, apiUrl, t]
+      [confirmDelete, userData.id, showMessage, apiUrl, t],
     );
 
     const handleThemeChange = useCallback(
       (theme: "dark" | "light") => {
         setSelectedTheme(theme);
-        // Here you would typically save the theme preference to localStorage or backend
         localStorage.setItem("theme", theme);
         showMessage("success", `${t.themeChangedTo} ${theme}`);
       },
-      [showMessage, t]
+      [showMessage, t],
     );
 
     const handleResetForm = useCallback(() => {
@@ -877,47 +862,44 @@ export const Settings: React.FC<SettingsProps> = React.memo(
       setMessage(null);
     }, [userData.username, userData.email]);
 
-    // Memoized tab handlers
     const handleSetProfileTab = useCallback(() => setActiveTab("profile"), []);
     const handleSetAccountTab = useCallback(() => setActiveTab("account"), []);
     const handleSetLanguageTab = useCallback(
       () => setActiveTab("language"),
-      []
+      [],
     );
     const handleSetDangerTab = useCallback(() => setActiveTab("danger"), []);
     const handleGoBack = useCallback(() => navigate(-1), [navigate]);
 
-    // Memoized danger button styles
     const dangerButtonStyle = useMemo(
       () => ({
         background: "rgba(179, 25, 25, 1)",
         color: "white",
         border: "none",
       }),
-      []
+      [],
     );
     const dangerTextStyle = useMemo(
       () => ({
         color: "rgba(179, 25, 25, 1)",
       }),
-      []
+      [],
     );
 
     const handleDangerMouseEnter = useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = "rgba(139, 18, 18, 1)";
       },
-      []
+      [],
     );
 
     const handleDangerMouseLeave = useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = "rgba(179, 25, 25, 1)";
       },
-      []
+      [],
     );
 
-    // Memoized message display
     const messageDisplay = useMemo(() => {
       if (!message) return null;
 
@@ -939,7 +921,6 @@ export const Settings: React.FC<SettingsProps> = React.memo(
       );
     }, [message]);
 
-    // Memoized profile form
     const profileForm = useMemo(
       () => (
         <div>
@@ -1074,10 +1055,9 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         handleAvatarChange,
         handleResetForm,
         t,
-      ]
+      ],
     );
 
-    // Memoized account form
     const accountForm = useMemo(
       () => (
         <div>
@@ -1194,7 +1174,7 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         isSaving,
         handleChangePassword,
         t,
-      ]
+      ],
     );
     const languageForm = useMemo(
       () => (
@@ -1222,13 +1202,13 @@ export const Settings: React.FC<SettingsProps> = React.memo(
                 value={selectedLanguage.code}
                 onChange={(newCode) => {
                   const newLang = LANGUAGES.find(
-                    (lang) => lang.code === newCode
+                    (lang) => lang.code === newCode,
                   );
                   if (newLang) {
                     setSelectedLanguage(newLang);
                     showMessage(
                       "success",
-                      `${t.languageChangedTo} ${newLang.name}`
+                      `${t.languageChangedTo} ${newLang.name}`,
                     );
                   }
                 }}
@@ -1257,10 +1237,9 @@ export const Settings: React.FC<SettingsProps> = React.memo(
           </div>
         </div>
       ),
-      [selectedLanguage, t, showMessage]
+      [selectedLanguage, t, showMessage],
     );
 
-    // Memoized danger zone form
     const dangerForm = useMemo(
       () => (
         <div>
@@ -1360,10 +1339,9 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         handleDangerMouseLeave,
         dangerButtonStyle,
         t,
-      ]
+      ],
     );
 
-    // Return skeleton if loading
     if (isLoadingSkeleton) {
       return <SettingsSkeleton />;
     }
@@ -1730,5 +1708,5 @@ export const Settings: React.FC<SettingsProps> = React.memo(
         </div>
       </div>
     );
-  }
+  },
 );

@@ -1,6 +1,3 @@
-// privacyTranslations.ts
-
-// Define the type for Privacy Policy translation keys
 export type PrivacyTranslationKeys = {
   privacyPolicy: string;
   lastUpdated: string;
@@ -41,7 +38,6 @@ export type PrivacyTranslationKeys = {
   termsOfService: string;
 };
 
-// Define the type for language codes
 export type PrivacyLanguageCode =
   | "us"
   | "gr"
@@ -51,7 +47,6 @@ export type PrivacyLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const privacyTranslations: Record<
   PrivacyLanguageCode,
   PrivacyTranslationKeys

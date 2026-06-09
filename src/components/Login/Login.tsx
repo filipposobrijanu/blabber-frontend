@@ -27,7 +27,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const t =
     loginTranslations[selectedLanguage.code as keyof typeof loginTranslations];
-  // Add this with your other state declarations
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSkeleton, setIsLoadingSkeleton] = useState(true);
@@ -73,9 +72,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
         setIsGoogleLoading(false);
       }
     },
-    [API_URL, onLogin]
+    [API_URL, onLogin],
   );
-  // Add this useEffect to handle OAuth callback
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
@@ -90,46 +88,41 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     }
   }, [handleGoogleAuth]);
 
-  // Memoize form control style
   const formControlStyle: CSSProperties = useMemo(
     () => ({
       backgroundColor: "transparent",
       color: "white",
     }),
-    []
+    [],
   );
 
-  // Memoize input style
   const inputStyle: CSSProperties = useMemo(
     () => ({
       outline: "none",
       background: "transparent",
     }),
-    []
+    [],
   );
 
-  // Memoize date input style
   const dateInputStyle: CSSProperties = useMemo(
     () => ({
       outline: "none",
       background: "transparent",
       color: "white",
     }),
-    []
+    [],
   );
 
-  // Memoize responsive class based on window width
   const responsiveClass = useMemo(
     () => (window.innerWidth < 768 ? "mt-3" : ""),
-    []
+    [],
   );
 
   const responsiveDisplayClass = useMemo(
     () => (window.innerWidth < 768 ? "d-block" : "d-block"),
-    []
+    [],
   );
 
-  // Memoized event handlers
   const handleShowPassword = useCallback(() => {
     setShowPassword((prev) => {
       const newShowPassword = !prev;
@@ -140,17 +133,15 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const [isModalClosing, setIsModalClosing] = useState(false);
 
-  // Update the handleClosePasswordModal to include fade-out
   const handleClosePasswordModal = useCallback(() => {
     if (showPasswordModal && !isModalClosing) {
       setIsModalClosing(true);
-      // Wait for animation to complete before actually closing
       setTimeout(() => {
         setShowPasswordModal(false);
         setIsModalClosing(false);
         setForgotPasswordError("");
         setForgotPasswordEmail("");
-      }, 250); // Match this with your CSS animation duration
+      }, 250);
     }
   }, [showPasswordModal, isModalClosing]);
 
@@ -342,7 +333,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       onLogin,
       clearErrors,
       t,
-    ]
+    ],
   );
 
   const handleStateChange = useCallback(
@@ -350,10 +341,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       clearForm();
       setWhatState(newState);
     },
-    [clearForm]
+    [clearForm],
   );
 
-  // Memoize field change handlers
   const handleEmailChange = useCallback((value: string) => {
     setEmail(value);
     setErrorEmailMessage("");
@@ -383,124 +373,118 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setForgotPasswordSuccess("");
   }, []);
 
-  // Memoize skeleton loader to prevent recreation - MUST BE BEFORE ANY CONDITIONAL RETURNS
   const SkeletonLoader = useMemo(
-    () => () =>
-      (
-        <div className="login-content d-flex flex-column align-items-center justify-content-center justify-content-md-start gap-0 mb-5">
-          {whatState === "Login" && (
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="mb-3">
-                <div
-                  className="d-flex login-container glass p-4 p-sm-4 px-1 px-sm-5 flex-column mt-5 text-start align-items-center"
-                  style={{ maxWidth: "550px" }}
-                >
-                  <form
-                    onSubmit={handleSubmit}
-                    className="login-form px-3 py-2"
-                  >
-                    <div className="text-center mb-4 d-flex gap-2 flex-column justify-content-center align-items-center">
+    () => () => (
+      <div className="login-content d-flex flex-column align-items-center justify-content-center justify-content-md-start gap-0 mb-5">
+        {whatState === "Login" && (
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="mb-3">
+              <div
+                className="d-flex login-container glass p-4 p-sm-4 px-1 px-sm-5 flex-column mt-5 text-start align-items-center"
+                style={{ maxWidth: "550px" }}
+              >
+                <form onSubmit={handleSubmit} className="login-form px-3 py-2">
+                  <div className="text-center mb-4 d-flex gap-2 flex-column justify-content-center align-items-center">
+                    <div
+                      className="skeleton-blink2 rounded-5  d-flex justify-content-center align-items-center"
+                      style={{
+                        width: "250px",
+                        height: "35px",
+                        backgroundColor: "#ffffffec",
+                      }}
+                    ></div>
+                    <div
+                      className={`skeleton-blink rounded-5 justify-content-center align-items-center ${
+                        window.innerWidth < 768 ? "d-none" : "d-flex"
+                      } `}
+                      style={{
+                        width: "300px",
+                        height: "25px",
+                        backgroundColor: "#adadade8",
+                      }}
+                    ></div>
+                  </div>
+                  <div className="d-flex flex-column gap-2 flex-wrap">
+                    <div className="d-flex flex-column gap-2 flex-wrap">
                       <div
-                        className="skeleton-blink2 rounded-5  d-flex justify-content-center align-items-center"
+                        className="skeleton-blink2 rounded-5 d-flex justify-content-center align-items-center"
                         style={{
-                          width: "250px",
-                          height: "35px",
+                          width: "325px",
+                          height: "40px",
                           backgroundColor: "#ffffffec",
                         }}
                       ></div>
-                      <div
-                        className={`skeleton-blink rounded-5 justify-content-center align-items-center ${
-                          window.innerWidth < 768 ? "d-none" : "d-flex"
-                        } `}
-                        style={{
-                          width: "300px",
-                          height: "25px",
-                          backgroundColor: "#adadade8",
-                        }}
-                      ></div>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-wrap">
-                      <div className="d-flex flex-column gap-2 flex-wrap">
-                        <div
-                          className="skeleton-blink2 rounded-5 d-flex justify-content-center align-items-center"
-                          style={{
-                            width: "325px",
-                            height: "40px",
-                            backgroundColor: "#ffffffec",
-                          }}
-                        ></div>
-                      </div>
-                      <div className="d-flex flex-column gap-2 mt-2 flex-wrap">
-                        <div
-                          className="skeleton-blink2 rounded-5 d-flex justify-content-center align-items-center"
-                          style={{
-                            width: "325px",
-                            height: "40px",
-                            backgroundColor: "#ffffffec",
-                          }}
-                        ></div>
-                      </div>
-                      <div className="d-flex">
-                        <div
-                          className="skeleton-blink rounded-5 d-flex justify-content-start align-items-center"
-                          style={{
-                            width: "150px",
-                            height: "20px",
-                            backgroundColor: "#adadade8",
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div
-                      className="skeleton-blink2 rounded-4 mt-4 mb-2  d-flex justify-content-center align-items-center"
-                      style={{
-                        width: "325px",
-                        height: "40px",
-                        backgroundColor: "#ffffffec",
-                      }}
-                    ></div>
-
-                    <div className="d-flex gap-2 m-0 mt-3">
+                    <div className="d-flex flex-column gap-2 mt-2 flex-wrap">
                       <div
-                        className="skeleton-blink rounded-5  d-flex justify-content-center align-items-center"
+                        className="skeleton-blink2 rounded-5 d-flex justify-content-center align-items-center"
                         style={{
                           width: "325px",
+                          height: "40px",
+                          backgroundColor: "#ffffffec",
+                        }}
+                      ></div>
+                    </div>
+                    <div className="d-flex">
+                      <div
+                        className="skeleton-blink rounded-5 d-flex justify-content-start align-items-center"
+                        style={{
+                          width: "150px",
                           height: "20px",
                           backgroundColor: "#adadade8",
                         }}
                       ></div>
                     </div>
+                  </div>
+
+                  <div
+                    className="skeleton-blink2 rounded-4 mt-4 mb-2  d-flex justify-content-center align-items-center"
+                    style={{
+                      width: "325px",
+                      height: "40px",
+                      backgroundColor: "#ffffffec",
+                    }}
+                  ></div>
+
+                  <div className="d-flex gap-2 m-0 mt-3">
                     <div
-                      className="skeleton-blink2 rounded-4 mt-3  d-flex justify-content-center align-items-center"
+                      className="skeleton-blink rounded-5  d-flex justify-content-center align-items-center"
                       style={{
                         width: "325px",
-                        height: "40px",
-                        backgroundColor: "#ffffffec",
+                        height: "20px",
+                        backgroundColor: "#adadade8",
                       }}
                     ></div>
+                  </div>
+                  <div
+                    className="skeleton-blink2 rounded-4 mt-3  d-flex justify-content-center align-items-center"
+                    style={{
+                      width: "325px",
+                      height: "40px",
+                      backgroundColor: "#ffffffec",
+                    }}
+                  ></div>
 
-                    <div className="d-flex gap-2 m-0 mt-2 mb-2">
-                      <div
-                        className="skeleton-blink rounded-5  d-flex justify-content-start align-items-center"
-                        style={{
-                          width: "300px",
-                          height: "20px",
-                          backgroundColor: "#adadade8",
-                        }}
-                      ></div>
-                    </div>
-                  </form>
-                </div>
+                  <div className="d-flex gap-2 m-0 mt-2 mb-2">
+                    <div
+                      className="skeleton-blink rounded-5  d-flex justify-content-start align-items-center"
+                      style={{
+                        width: "300px",
+                        height: "20px",
+                        backgroundColor: "#adadade8",
+                      }}
+                    ></div>
+                  </div>
+                </form>
               </div>
             </div>
-          )}
-        </div>
-      ),
-    [whatState, responsiveClass, handleSubmit]
+          </div>
+        )}
+      </div>
+    ),
+    [whatState, responsiveClass, handleSubmit],
   );
 
-  // Effects
   useEffect(() => {
     if (whatState === "Login") {
       document.title = `Blabber - ${t.loginTon}`;
@@ -517,7 +501,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // NOW the conditional return can happen after all hooks are called
   if (isLoadingSkeleton) {
     return <SkeletonLoader />;
   }
@@ -536,7 +519,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             errorEmailMessage={errorEmailMessage}
             errorPasswordMessage={errorPasswordMessage}
             isLoading={isLoading}
-            isGoogleLoading={isGoogleLoading} // ADD THIS
+            isGoogleLoading={isGoogleLoading}
             responsiveDisplayClass={responsiveDisplayClass}
             formControlStyle={formControlStyle}
             inputStyle={inputStyle}
@@ -564,14 +547,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             errorEmailMessage={errorEmailMessage}
             errorPasswordMessage={errorPasswordMessage}
             isLoading={isLoading}
-            isGoogleLoading={isGoogleLoading} // ΠΡΟΣΘΗΚΗ
+            isGoogleLoading={isGoogleLoading}
             formControlStyle={formControlStyle}
             inputStyle={inputStyle}
             dateInputStyle={dateInputStyle}
             onUsernameChange={handleUsernameChange}
             onEmailChange={handleEmailChange}
             onPasswordChange={handlePasswordChange}
-            onGoogleError={(error) => setErrorMessage(error)} // ΠΡΟΣΘΗΚΗ
+            onGoogleError={(error) => setErrorMessage(error)}
             onDateOfBirthChange={handleDateOfBirthChange}
             onShowPassword={handleShowPassword}
             onSubmit={handleSubmit}
@@ -600,7 +583,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   );
 };
 
-// Extracted Login Form Component
 interface LoginFormProps {
   email: string;
   password: string;
@@ -608,7 +590,7 @@ interface LoginFormProps {
   showPassword: boolean;
   errorMessage: string;
   errorEmailMessage: string;
-  isGoogleLoading: boolean; // ADD THIS
+  isGoogleLoading: boolean;
   errorPasswordMessage: string;
   isLoading: boolean;
   responsiveDisplayClass: string;
@@ -619,7 +601,7 @@ interface LoginFormProps {
   onShowPassword: () => void;
   onSubmit: (e: React.FormEvent) => void;
   onShowPasswordModal: () => void;
-  onGoogleError: (error: string) => void; // ADD THIS
+  onGoogleError: (error: string) => void;
   onStateChange: (state: string) => void;
   t: any;
 }
@@ -815,11 +797,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <small>{t.or}</small>
           </div>
 
-          {/* Google Login Button */}
           <GoogleLoginButton
-            onSuccess={() => {}} // Not used in manual implementation
-            onError={onGoogleError} // USE THE PASSED PROP
-            isLoading={isGoogleLoading} // USE THE PASSED PROP
+            onSuccess={() => {}}
+            onError={onGoogleError}
+            isLoading={isGoogleLoading}
           />
           <div className="d-flex flex-wrap gap-1 gap-sm-2 m-0 mt-2 mb-2 text-start">
             <small>{t.doYouNeedAccount}</small>
@@ -840,7 +821,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
   </div>
 );
 
-// Extracted Register Form Component
 interface RegisterFormProps {
   username: string;
   email: string;
@@ -853,7 +833,7 @@ interface RegisterFormProps {
   errorEmailMessage: string;
   errorPasswordMessage: string;
   isLoading: boolean;
-  isGoogleLoading: boolean; // ΠΡΟΣΘΗΚΗ
+  isGoogleLoading: boolean;
   formControlStyle: CSSProperties;
   inputStyle: CSSProperties;
   dateInputStyle: CSSProperties;
@@ -864,7 +844,7 @@ interface RegisterFormProps {
   onShowPassword: () => void;
   onSubmit: (e: React.FormEvent) => void;
   onStateChange: (state: string) => void;
-  onGoogleError: (error: string) => void; // ΠΡΟΣΘΗΚΗ
+  onGoogleError: (error: string) => void;
   t: any;
 }
 
@@ -1177,9 +1157,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
           {/* Google Login Button */}
           <GoogleLoginButton
-            onSuccess={() => {}} // Not used in manual implementation
-            onError={onGoogleError} // USE THE PASSED PROP
-            isLoading={isGoogleLoading} // USE THE PASSED PROP
+            onSuccess={() => {}}
+            onError={onGoogleError}
+            isLoading={isGoogleLoading}
             mode="signup"
           />
           <div className="d-flex gap-2 m-0 mt-2 mb-2">

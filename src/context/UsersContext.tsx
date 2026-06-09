@@ -30,25 +30,22 @@ export const UsersProvider: React.FC<UsersProviderProps> = React.memo(
     const [users, setUsersState] = useState<Record<string, User>>({});
     const [onlineUsers, setOnlineUsersState] = useState<User[]>([]);
 
-    // Memoized user lookup functions
     const getUserById = useCallback(
       (userId: string): User | undefined => {
         return users[userId];
       },
-      [users]
+      [users],
     );
 
     const getUsersByIds = useCallback(
       (userIds: string[]): User[] => {
         return userIds.map((id) => users[id]).filter(Boolean) as User[];
       },
-      [users]
+      [users],
     );
 
-    // Memoized state setters
     const setUser = useCallback((user: User | null) => {
       if (user === null) {
-        // Clear all users when logging out
         setUsersState({});
         setOnlineUsersState([]);
       } else {
@@ -71,7 +68,6 @@ export const UsersProvider: React.FC<UsersProviderProps> = React.memo(
 
     const setOnlineUsers = useCallback((usersArray: User[]) => {
       setOnlineUsersState(usersArray);
-      // Also update the main users store with online status
       setUsersState((prev) => {
         const newUsers = { ...prev };
         usersArray.forEach((user) => {
@@ -85,7 +81,6 @@ export const UsersProvider: React.FC<UsersProviderProps> = React.memo(
       });
     }, []);
 
-    // Memoize the entire context value to prevent unnecessary re-renders
     const value: UsersContextType = useMemo(
       () => ({
         users,
@@ -104,13 +99,13 @@ export const UsersProvider: React.FC<UsersProviderProps> = React.memo(
         setUser,
         setUsers,
         setOnlineUsers,
-      ]
+      ],
     );
 
     return (
       <UsersContext.Provider value={value}>{children}</UsersContext.Provider>
     );
-  }
+  },
 );
 
 export const useUsersContext = () => {

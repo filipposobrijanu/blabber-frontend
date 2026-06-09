@@ -1,10 +1,9 @@
-// hooks/useAudioLevelDetector.ts - UPDATED VERSION
 import { useState, useEffect, useRef } from "react";
 
 export const useAudioLevelDetector = (
   stream: MediaStream | null,
   audioElement: HTMLAudioElement | HTMLVideoElement | null,
-  isLocal: boolean = false
+  isLocal: boolean = false,
 ) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -15,7 +14,6 @@ export const useAudioLevelDetector = (
   const animationFrameRef = useRef<number>(0);
 
   useEffect(() => {
-    // Cleanup previous instances
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
@@ -30,12 +28,9 @@ export const useAudioLevelDetector = (
 
     let audioSource: MediaStream | HTMLMediaElement | null = null;
 
-    // Priority 1: Use MediaStream if available and has audio tracks
     if (stream && stream.getAudioTracks().length > 0) {
       audioSource = stream;
-    }
-    // Priority 2: Use audio element (for remote audio in audio-only calls)
-    else if (audioElement) {
+    } else if (audioElement) {
       audioSource = audioElement;
     }
 
@@ -56,7 +51,7 @@ export const useAudioLevelDetector = (
           audioSource instanceof MediaStream
             ? audioSource.getAudioTracks().length
             : "N/A",
-      }
+      },
     );
 
     try {
@@ -66,12 +61,11 @@ export const useAudioLevelDetector = (
 
       const analyser = audioContextRef.current.createAnalyser();
       analyser.fftSize = 256;
-      analyser.smoothingTimeConstant = 0.2; // Lower for more responsive detection
-      analyser.minDecibels = -70; // Set minimum dB level
-      analyser.maxDecibels = -10; // Set maximum dB level
+      analyser.smoothingTimeConstant = 0.2;
+      analyser.minDecibels = -70;
+      analyser.maxDecibels = -10;
       analyserRef.current = analyser;
 
-      // Create source based on type
       if (audioSource instanceof MediaStream) {
         sourceRef.current =
           audioContextRef.current.createMediaStreamSource(audioSource);
@@ -85,26 +79,23 @@ export const useAudioLevelDetector = (
       const dataArray = new Uint8Array(analyser.frequencyBinCount);
       let silenceCounter = 0;
       let speakingCounter = 0;
-      const SPEAKING_THRESHOLD = 3; // Require 3 frames of speaking
-      const SILENCE_THRESHOLD = 10; // Require 10 frames of silence
+      const SPEAKING_THRESHOLD = 3;
+      const SILENCE_THRESHOLD = 10;
 
       const checkAudioLevel = () => {
         if (!analyserRef.current) return;
 
         analyserRef.current.getByteFrequencyData(dataArray);
 
-        // Calculate average volume (more stable than RMS)
         let sum = 0;
         for (let i = 0; i < dataArray.length; i++) {
           sum += dataArray[i];
         }
         const average = sum / dataArray.length;
 
-        // Adjust thresholds - higher for local audio (echo cancellation)
         const speakingThreshold = isLocal ? 25 : 20;
         const isCurrentlySpeaking = average > speakingThreshold;
 
-        // Add hysteresis to prevent flickering
         if (isCurrentlySpeaking) {
           silenceCounter = 0;
           speakingCounter++;
@@ -126,7 +117,6 @@ export const useAudioLevelDetector = (
         animationFrameRef.current = requestAnimationFrame(checkAudioLevel);
       };
 
-      // Start detection after a short delay to allow context to initialize
       setTimeout(() => {
         animationFrameRef.current = requestAnimationFrame(checkAudioLevel);
       }, 100);

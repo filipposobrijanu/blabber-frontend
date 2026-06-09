@@ -5,7 +5,6 @@ import { resetPasswordTranslations } from "./ResetPasswordTranslations";
 import { useShopContext } from "../../hooks/useShopContext";
 import { motion } from "framer-motion";
 
-// Memoized Background component
 const Background = memo(() => (
   <div
     style={{
@@ -28,7 +27,6 @@ const Background = memo(() => (
 
 Background.displayName = "Background";
 
-// Memoized SkeletonLoader component
 const SkeletonLoader = memo(() => (
   <div style={{ position: "relative", minHeight: "100vh" }}>
     <Background />
@@ -114,7 +112,6 @@ const SkeletonLoader = memo(() => (
 
 SkeletonLoader.displayName = "SkeletonLoader";
 
-// Memoized InvalidLinkState component
 const InvalidLinkState = memo(
   ({
     t,
@@ -152,12 +149,11 @@ const InvalidLinkState = memo(
         </div>
       </div>
     </div>
-  )
+  ),
 );
 
 InvalidLinkState.displayName = "InvalidLinkState";
 
-// Memoized PasswordForm component
 interface PasswordFormProps {
   newPassword: string;
   confirmPassword: string;
@@ -189,7 +185,7 @@ const PasswordForm = memo<PasswordFormProps>(
         e.preventDefault();
         onSubmit(e);
       },
-      [onSubmit]
+      [onSubmit],
     );
 
     return (
@@ -310,7 +306,7 @@ const PasswordForm = memo<PasswordFormProps>(
         </form>
       </div>
     );
-  }
+  },
 );
 
 PasswordForm.displayName = "PasswordForm";
@@ -321,7 +317,6 @@ export const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
   const { selectedLanguage } = useShopContext();
 
-  // State
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -333,21 +328,18 @@ export const ResetPassword: React.FC = () => {
   const token = searchParams.get("token");
   const email = searchParams.get("email");
 
-  // Memoize translations
   const t = useMemo(
     () =>
       resetPasswordTranslations[
         selectedLanguage.code as keyof typeof resetPasswordTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // Memoize navigation handlers
   const handleNavigateLogin = useCallback(() => {
     navigate("/login");
   }, [navigate]);
 
-  // Memoize password change handlers
   const handleNewPasswordChange = useCallback((value: string) => {
     setNewPassword(value);
   }, []);
@@ -356,7 +348,6 @@ export const ResetPassword: React.FC = () => {
     setConfirmPassword(value);
   }, []);
 
-  // Handle form submission with cleanup
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -393,7 +384,6 @@ export const ResetPassword: React.FC = () => {
         if (mounted) {
           setSuccessMessage(t.passwordResetSuccessfully);
 
-          // Set redirect timer
           redirectTimer = setTimeout(() => {
             if (mounted) {
               navigate("/login");
@@ -417,10 +407,9 @@ export const ResetPassword: React.FC = () => {
         }
       };
     },
-    [token, email, newPassword, confirmPassword, API_URL, navigate, t]
+    [token, email, newPassword, confirmPassword, API_URL, navigate, t],
   );
 
-  // Effects with cleanup
   useEffect(() => {
     document.title = `Blabber - ${t.resetYourPassword}`;
   }, [t.resetYourPassword]);
@@ -440,17 +429,14 @@ export const ResetPassword: React.FC = () => {
     };
   }, []);
 
-  // Loading state
   if (isLoadingSkeleton) {
     return <SkeletonLoader />;
   }
 
-  // Invalid token/email state
   if (!token || !email) {
     return <InvalidLinkState t={t} onNavigateLogin={handleNavigateLogin} />;
   }
 
-  // Main form state
   return (
     <div style={{ position: "relative", minHeight: "100vh" }}>
       <Background />

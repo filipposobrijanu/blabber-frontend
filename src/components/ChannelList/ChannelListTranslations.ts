@@ -1,6 +1,3 @@
-// channelListTranslations.ts
-
-// Define the type for Channel List translation keys
 export type ChannelListTranslationKeys = {
   addChannel: string;
   joinChannel: string;
@@ -22,7 +19,6 @@ export type ChannelListTranslationKeys = {
   channelPrompt: string;
 };
 
-// Define the type for language codes
 export type ChannelListLanguageCode =
   | "us"
   | "gr"
@@ -32,7 +28,6 @@ export type ChannelListLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const channelListTranslations: Record<
   ChannelListLanguageCode,
   ChannelListTranslationKeys

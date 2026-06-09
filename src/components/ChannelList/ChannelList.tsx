@@ -9,7 +9,6 @@ import { ImageUpload } from "../ImageUpload/ImageUpload";
 import ReactDOM from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Add this function component for the portal
 const ModalPortal: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const modalRoot = document.getElementById("modal-root");
   if (!modalRoot) return null;
@@ -25,7 +24,7 @@ interface ChannelListProps {
     name: string,
     description: string,
     bgcolor: string,
-    image: string
+    image: string,
   ) => void;
   channelCreateError?: string;
   onClearChannelError?: () => void;
@@ -34,7 +33,6 @@ interface ChannelListProps {
   currentUser?: { id: string };
 }
 
-// Memoize the skeleton component to prevent unnecessary re-renders
 const ChannelListSkeleton = React.memo(() => {
   const skeletonItems = useMemo(() => Array.from({ length: 4 }), []);
 
@@ -138,7 +136,6 @@ const ChannelListSkeleton = React.memo(() => {
   );
 });
 
-// Properly extracted ChannelItem component
 interface ChannelItemProps {
   channel: Channel;
   isSelected: boolean;
@@ -159,7 +156,7 @@ interface ChannelItemProps {
     image?: string;
     isOnline?: boolean;
     lastSeen?: Date;
-  } | null; // Allow null
+  } | null;
 }
 
 const ChannelItem: React.FC<ChannelItemProps> = React.memo(
@@ -187,7 +184,6 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
       setSelectedChannel(channel.name);
       onChannelSelect(channel);
 
-      // Update page title based on channel type
       if (isDMChannel && otherParticipant) {
         setPageTitle(`Blabber - ${otherParticipant.username}`);
       } else {
@@ -204,7 +200,7 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
     ]);
 
     const [tooltipDirection, setTooltipDirection] = useState<"top" | "bottom">(
-      isFirstChannel ? "bottom" : "top"
+      isFirstChannel ? "bottom" : "top",
     );
 
     const handleTooltipShow = useCallback(
@@ -216,7 +212,7 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
 
         setTooltipDirection("top");
       },
-      [isFirstChannel]
+      [isFirstChannel],
     );
 
     const handleSettingsClick = useCallback(
@@ -225,24 +221,24 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
         e.stopPropagation();
         onChannelSettings?.(channel);
       },
-      [channel, onChannelSettings]
+      [channel, onChannelSettings],
     );
 
     const handleInviteClick = useCallback(
       (e: React.MouseEvent) => {
         onShowInvite(channel, e);
       },
-      [channel, onShowInvite]
+      [channel, onShowInvite],
     );
     const { selectedLanguage } = useShopContext();
     const maxWidth =
       window.innerWidth < 410
         ? "115px"
         : window.innerWidth < 500
-        ? "150px"
-        : window.innerWidth < 768
-        ? "180px"
-        : "85px";
+          ? "150px"
+          : window.innerWidth < 768
+            ? "180px"
+            : "85px";
 
     return (
       <div className={`channel ${isSelected ? "active" : ""}`}>
@@ -329,7 +325,6 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
 
               <div className="d-flex gap-1 text-capitalize align-items-center  flex-grow-1 ">
                 {isDMChannel && otherParticipant ? (
-                  // DM Channel Display
                   <div className="d-flex align-items-center gap-2 w-100">
                     <div className="position-relative">
                       <img
@@ -379,7 +374,6 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
                     </div>
                   </div>
                 ) : (
-                  // Regular Channel Display
                   <span
                     className="text-truncate fw-semibold"
                     style={{ maxWidth }}
@@ -528,7 +522,7 @@ const ChannelItem: React.FC<ChannelItemProps> = React.memo(
         </Link>
       </div>
     );
-  }
+  },
 );
 
 export const ChannelList: React.FC<ChannelListProps> = React.memo(
@@ -591,7 +585,7 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
 
     const initialChannelCount = useMemo(
       () => channels.length,
-      [channels.length]
+      [channels.length],
     );
 
     useEffect(() => {
@@ -620,7 +614,7 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
         if (newChannelName.trim()) {
           const channelName = newChannelName.trim().toLowerCase();
           const isDuplicate = channels.some(
-            (channel) => channel.name.toLowerCase() === channelName
+            (channel) => channel.name.toLowerCase() === channelName,
           );
 
           if (isDuplicate) {
@@ -635,7 +629,7 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
             newChannelName.trim(),
             newChannelDesc.trim(),
             newColor,
-            newChannelImg.trim()
+            newChannelImg.trim(),
           );
         }
       },
@@ -647,7 +641,7 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
         onChannelCreate,
         onClearChannelError,
         channels,
-      ]
+      ],
     );
 
     const handleCloseModal = useCallback(() => {
@@ -672,7 +666,7 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
         setShowInviteModal(true);
         setCopiedInvite(false);
       },
-      []
+      [],
     );
 
     const handleCopyInvite = useCallback(() => {
@@ -698,7 +692,7 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
     const handleAddChannelClick = useCallback(() => setShowModal(true), []);
     const handleJoinChannelClick = useCallback(
       () => setShowJoinModal(true),
-      []
+      [],
     );
     const handleCloseJoinModal = useCallback(() => {
       if (showJoinModal && !isJoinModalClosing) {
@@ -746,11 +740,10 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
         >
           {channels.map((channel, index) => {
             const isDMChannel = channel.isDM;
-            // For DM channels, find the other participant - FIXED
             const otherParticipant =
               isDMChannel && channel.participants
                 ? channel.participants.find(
-                    (p: any) => p.userId !== currentUser?.id
+                    (p: any) => p.userId !== currentUser?.id,
                   )
                 : null;
 
@@ -788,8 +781,8 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
         setPageTitle,
         unreadCounts,
         t,
-        currentUser, // ADD THIS DEPENDENCY
-      ]
+        currentUser,
+      ],
     );
 
     if (isLoadingSkeleton) {
@@ -1297,5 +1290,5 @@ export const ChannelList: React.FC<ChannelListProps> = React.memo(
         )}
       </>
     );
-  }
+  },
 );

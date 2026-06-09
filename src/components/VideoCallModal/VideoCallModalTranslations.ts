@@ -1,47 +1,35 @@
-// videoCallTranslations.ts
-
-// Define the type for Video Call translation keys
 export type VideoCallTranslationKeys = {
-  // Incoming Call
   incomingCall: string;
   incomingCallFrom: string;
   incomingAudioCallFrom: string;
   incomingVideoCallFrom: string;
   onChannel: string;
 
-  // Calling State
   calling: string;
 
-  // Buttons
   decline: string;
   accept: string;
   leave: string;
 
-  // Controls
   mute: string;
   unmute: string;
   cameraOn: string;
   cameraOff: string;
 
-  // Status Messages
   waitingForVideoStream: string;
   callFailed: string;
   unableToEstablishConnection: string;
   close: string;
 
-  // Error States
   invalidCall: string;
   callEnded: string;
   connectionLost: string;
 
-  // Tooltips
   swapViews: string;
   endCall: string;
 
-  // Duration
   callDuration: string;
 
-  // Audio Call Specific
   audioCall: string;
   speaking: string;
 
@@ -108,14 +96,12 @@ export type VideoCallTranslationKeys = {
   connectionPoor: string;
   connectionDisconnected: string;
 
-  // Connection Stats - ADD THESE
   latency: string;
   packetLoss: string;
   bitrate: string;
   connectionQuality: string;
 };
 
-// Define the type for language codes
 export type VideoCallLanguageCode =
   | "us"
   | "gr"
@@ -125,7 +111,6 @@ export type VideoCallLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const VideoCallModalTranslations: Record<
   VideoCallLanguageCode,
   VideoCallTranslationKeys
@@ -136,7 +121,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Poor",
     connectionDisconnected: "Disconnected",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Latency",
     packetLoss: "Packet Loss",
     bitrate: "Bitrate",
@@ -229,7 +213,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Κακή",
     connectionDisconnected: "Αποσυνδεδεμένη",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Καθυστέρηση",
     packetLoss: "Απώλεια πακέτων",
     bitrate: "Ρυθμός bit",
@@ -322,7 +305,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Плохая",
     connectionDisconnected: "Отключено",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Задержка",
     packetLoss: "Потеря пакетов",
     bitrate: "Битрейт",
@@ -415,7 +397,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Rea",
     connectionDisconnected: "Deconectată",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Întârziere",
     packetLoss: "Pierdere de pachete",
     bitrate: "Rată de biți",
@@ -508,7 +489,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Mala",
     connectionDisconnected: "Desconectada",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Latencia",
     packetLoss: "Pérdida de paquetes",
     bitrate: "Tasa de bits",
@@ -601,7 +581,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Mauvaise",
     connectionDisconnected: "Déconnectée",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Latence",
     packetLoss: "Perte de paquets",
     bitrate: "Débit binaire",
@@ -694,7 +673,6 @@ export const VideoCallModalTranslations: Record<
     connectionPoor: "Schlecht",
     connectionDisconnected: "Getrennt",
 
-    // Connection Stats - ALREADY EXISTS, ensure they're there
     latency: "Latenz",
     packetLoss: "Paketverlust",
     bitrate: "Bitrate",

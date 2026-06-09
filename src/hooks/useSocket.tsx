@@ -10,7 +10,6 @@ export const useSocket = (url: string) => {
   > | null>(null);
 
   useEffect(() => {
-    // Create socket connection
     socketRef.current = io(url);
 
     socketRef.current.on("connect", () => {
@@ -23,7 +22,6 @@ export const useSocket = (url: string) => {
       console.log("Disconnected from server");
     });
 
-    // Cleanup function
     return () => {
       socketRef.current?.disconnect();
     };

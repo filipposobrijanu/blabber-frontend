@@ -29,7 +29,6 @@ export interface Friend {
   userId: string;
   friendId: string | User;
   friendsSince: Date | string;
-  // For populated friend data
   username?: string;
   email?: string;
   image?: string;
@@ -89,7 +88,6 @@ export interface TypingIndicator {
   isTyping: boolean;
 }
 
-// ADD THIS NEW INTERFACE
 export interface UnreadUpdate {
   channelId: string;
   count: number;
@@ -135,7 +133,7 @@ export interface ServerToClientEvents {
     timestamp: Date;
     channelId: string;
   }) => void;
-  "unread:update": (data: UnreadUpdate) => void; // ADD THIS LINE
+  "unread:update": (data: UnreadUpdate) => void;
   "friend:request:sent": (data: {
     requestId: string;
     fromUser: User;

@@ -1,6 +1,3 @@
-// resetPasswordTranslations.ts
-
-// Define the type for Reset Password translation keys
 export type ResetPasswordTranslationKeys = {
   resetYourPassword: string;
   enterNewPassword: string;
@@ -19,7 +16,6 @@ export type ResetPasswordTranslationKeys = {
   redirectingToLogin: string;
 };
 
-// Define the type for language codes
 export type ResetPasswordLanguageCode =
   | "us"
   | "gr"
@@ -29,7 +25,6 @@ export type ResetPasswordLanguageCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const resetPasswordTranslations: Record<
   ResetPasswordLanguageCode,
   ResetPasswordTranslationKeys

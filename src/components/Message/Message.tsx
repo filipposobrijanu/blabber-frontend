@@ -69,7 +69,7 @@ export const Message: React.FC<MessageProps> = React.memo(
     };
 
     const renderContentWithLinks = (
-      content: string
+      content: string,
     ): (string | JSX.Element)[] => {
       const links = find(content);
       const hasLinks = links.length > 0;
@@ -87,26 +87,23 @@ export const Message: React.FC<MessageProps> = React.memo(
 
       links.forEach(
         (link, index) => {
-          // Add text before the link
           if (link.start > lastIndex) {
             elements.push(content.slice(lastIndex, link.start));
           }
 
-          // Create link preview component instead of just a link
           elements.push(
             <LinkPreview
               key={`link-${index}`}
               url={link.href}
               originalLink={link.value}
-            />
+            />,
           );
 
           lastIndex = link.end;
         },
-        [isLink]
-      ); // Add isLink as dependency
+        [isLink],
+      );
 
-      // Add remaining text after the last link
       if (lastIndex < content.length) {
         elements.push(content.slice(lastIndex));
       }
@@ -134,9 +131,8 @@ export const Message: React.FC<MessageProps> = React.memo(
           setError(false);
 
           try {
-            // You'll need to set up a backend API for this due to CORS restrictions
             const response = await fetch(
-              `${API_URL}/api/link-preview?url=${encodeURIComponent(url)}`
+              `${API_URL}/api/link-preview?url=${encodeURIComponent(url)}`,
             );
 
             if (response.ok) {
@@ -155,7 +151,6 @@ export const Message: React.FC<MessageProps> = React.memo(
         fetchPreview();
       }, [url]);
 
-      // Simple fallback to regular link if no preview data
       if (error || !previewData) {
         return (
           <a
@@ -266,7 +261,6 @@ export const Message: React.FC<MessageProps> = React.memo(
                 </div>
               )}
 
-              {/* Show original URL at the bottom */}
               <div
                 className="link-preview-url"
                 style={{
@@ -289,9 +283,6 @@ export const Message: React.FC<MessageProps> = React.memo(
       if (!currentUserId || !message.seenBy) return false;
       return message.seenBy.some((seen) => seen.userId === currentUserId);
     }, [message.seenBy, currentUserId]);
-
-    // Calculate seen count and members
-    // Calculate seen count and members - FIXED LOGIC
     const seenInfo = useMemo(() => {
       if (!message.seenBy || message.seenBy.length === 0) {
         return {
@@ -302,21 +293,19 @@ export const Message: React.FC<MessageProps> = React.memo(
         };
       }
 
-      // Filter out the message sender from channel members for seen calculation
       const otherMembers = channelMembers.filter(
-        (member) => member.id !== message.userId
+        (member) => member.id !== message.userId,
       );
-      const totalMembers = Math.max(otherMembers.length, 1); // At least 1 to avoid division by zero
+      const totalMembers = Math.max(otherMembers.length, 1);
 
       const seenCount = message.seenBy.filter(
-        (seen) => seen.userId !== message.userId
+        (seen) => seen.userId !== message.userId,
       ).length;
       const percentage = Math.round((seenCount / totalMembers) * 100);
 
-      // Get recent seen users (excluding the message sender)
       const recentSeen = message.seenBy
-        .filter((seen) => seen.userId !== message.userId) // Exclude message sender
-        .slice(-3); // Get last 3 seen users
+        .filter((seen) => seen.userId !== message.userId)
+        .slice(-3);
 
       return {
         count: seenCount,
@@ -326,10 +315,7 @@ export const Message: React.FC<MessageProps> = React.memo(
       };
     }, [message.seenBy, channelMembers, message.userId]);
 
-    // Render seen indicators with better UI
-    // Render seen indicators with correct logic - FIXED
     const renderSeenIndicators = useCallback(() => {
-      // Only show for own messages and only if there are other members who could see it
       if (!isOwn || !message.seenBy || channelMembers.length <= 1) {
         return null;
       }
@@ -339,15 +325,13 @@ export const Message: React.FC<MessageProps> = React.memo(
       let statusText = t.sent;
       let statusColor = "#ffffffa8";
 
-      // Logic: If all other members have seen the message
       if (count >= totalMembers) {
         statusText = t.seenByAll;
-        statusColor = "#ffffffa8"; // Green when seen by all
+        statusColor = "#ffffffa8";
       } else if (count > 0) {
         statusText = `${t.seenBy} ${count}/${totalMembers}`;
         statusColor = "#ffffffa8";
       } else {
-        // No one has seen it yet (only delivered)
         return (
           <div
             className={`seen-indicators d-flex align-items-center ${
@@ -433,7 +417,6 @@ export const Message: React.FC<MessageProps> = React.memo(
                   );
                 })}
 
-                {/* Show +X if there are more seen users than we can display */}
                 {count > 3 && (
                   <small
                     style={{
@@ -452,10 +435,7 @@ export const Message: React.FC<MessageProps> = React.memo(
       );
     }, [isOwn, message.seenBy, seenInfo, channelMembers, t]);
 
-    // Mark message as seen when it becomes visible
-    // Mark message as seen when it becomes visible - IMPROVED
     useEffect(() => {
-      // Don't mark own messages as seen, or if already seen, or if no callback
       if (isOwn || !currentUserId || hasCurrentUserSeen || !onMarkAsSeen) {
         return;
       }
@@ -468,7 +448,7 @@ export const Message: React.FC<MessageProps> = React.memo(
           entries.forEach((entry) => {
             if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
               console.log(
-                `👀 Marking message ${message.id} as seen by user ${currentUserId}`
+                `👀 Marking message ${message.id} as seen by user ${currentUserId}`,
               );
               onMarkAsSeen(message.id);
               observer.disconnect();
@@ -476,9 +456,9 @@ export const Message: React.FC<MessageProps> = React.memo(
           });
         },
         {
-          threshold: 0.7, // Higher threshold - message must be more visible
-          rootMargin: "50px", // Trigger when 50px away from viewport
-        }
+          threshold: 0.7,
+          rootMargin: "50px",
+        },
       );
 
       observer.observe(messageElement);
@@ -487,7 +467,6 @@ export const Message: React.FC<MessageProps> = React.memo(
     }, [message.id, isOwn, currentUserId, hasCurrentUserSeen, onMarkAsSeen]);
 
     const showImageFullscreen = useCallback((imageUrl: string) => {
-      // Create overlay
       const overlay = document.createElement("div");
       overlay.style.cssText = `
     position: fixed;
@@ -503,7 +482,6 @@ export const Message: React.FC<MessageProps> = React.memo(
     cursor: pointer;
   `;
 
-      // Create image
       const img = document.createElement("img");
       img.src = imageUrl;
       img.style.cssText = `
@@ -514,7 +492,6 @@ export const Message: React.FC<MessageProps> = React.memo(
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   `;
 
-      // Close on click
       overlay.addEventListener("click", (e) => {
         if (e.target === overlay) {
           document.body.removeChild(overlay);
@@ -522,7 +499,6 @@ export const Message: React.FC<MessageProps> = React.memo(
         }
       });
 
-      // Close on ESC key
       const handleKeydown = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
           document.body.removeChild(overlay);
@@ -531,11 +507,9 @@ export const Message: React.FC<MessageProps> = React.memo(
       };
       document.addEventListener("keydown", handleKeydown);
 
-      // Add to page
       overlay.appendChild(img);
       document.body.appendChild(overlay);
     }, []);
-    // Date formatting functions
     const monthToString = useCallback((date: Date) => {
       const months = [
         t.january,
@@ -563,7 +537,7 @@ export const Message: React.FC<MessageProps> = React.memo(
         else if (day === 3 || day === 23) suffix = t.rd;
         return `${day}${suffix}`;
       },
-      [t]
+      [t],
     );
 
     const dateNextToNameString = useCallback((date: Date) => {
@@ -589,19 +563,19 @@ export const Message: React.FC<MessageProps> = React.memo(
 
     const messageTimestamp = useMemo(
       () => new Date(message.timestamp),
-      [message.timestamp]
+      [message.timestamp],
     );
     const formattedDate = useMemo(
       () => dateToString(messageTimestamp),
-      [messageTimestamp, dateToString]
+      [messageTimestamp, dateToString],
     );
     const formattedMonth = useMemo(
       () => monthToString(messageTimestamp),
-      [messageTimestamp, monthToString]
+      [messageTimestamp, monthToString],
     );
     const formattedTime = useMemo(
       () => dateNextToNameString(messageTimestamp),
-      [messageTimestamp, dateNextToNameString]
+      [messageTimestamp, dateNextToNameString],
     );
 
     const userImage = useMemo(() => {
@@ -626,12 +600,12 @@ export const Message: React.FC<MessageProps> = React.memo(
           !isLink
             ? "#063016bd"
             : !isOwn &&
-              !isEditing &&
-              message.type !== "image" &&
-              message.type !== "gif" &&
-              !isLink
-            ? "rgba(73, 73, 73, 0.5)"
-            : "transparent",
+                !isEditing &&
+                message.type !== "image" &&
+                message.type !== "gif" &&
+                !isLink
+              ? "rgba(73, 73, 73, 0.5)"
+              : "transparent",
         backdropFilter:
           !isEditing &&
           message.type !== "image" &&
@@ -643,7 +617,7 @@ export const Message: React.FC<MessageProps> = React.memo(
         wordBreak: "break-word",
         alignSelf: "flex-start",
       }),
-      [isOwn, isEditing, message.type]
+      [isOwn, isEditing, message.type],
     );
 
     const menuPositionStyle = useMemo(
@@ -663,7 +637,7 @@ export const Message: React.FC<MessageProps> = React.memo(
         overflow: "hidden",
         minWidth: selectedLanguage.code === "us" ? "100px" : "140px",
       }),
-      [isOwn]
+      [isOwn],
     );
 
     const handleEditSave = useCallback(() => {
@@ -691,7 +665,7 @@ export const Message: React.FC<MessageProps> = React.memo(
           setIsEditing(false);
         }
       },
-      [editedContent, message.id, message.content, onEdit]
+      [editedContent, message.id, message.content, onEdit],
     );
 
     const handleMenuToggle = useCallback(() => {
@@ -714,7 +688,7 @@ export const Message: React.FC<MessageProps> = React.memo(
     }, []);
 
     useEffect(() => {
-      setIsLoadingSkeleton(false); // No delay!
+      setIsLoadingSkeleton(false);
     }, []);
 
     useEffect(() => {
@@ -740,8 +714,6 @@ export const Message: React.FC<MessageProps> = React.memo(
       setImageError(false);
     }, [userImage]);
 
-    // Memoize skeleton loader
-    // Memoize skeleton loader
     const MessageSkeleton = useMemo(
       () => () => {
         const randomWidth1 = Math.random() * 200 + 100;
@@ -888,7 +860,7 @@ export const Message: React.FC<MessageProps> = React.memo(
           </div>
         );
       },
-      [isOwn, isFirstMessageOfDay, isSameMinuteAsPrev]
+      [isOwn, isFirstMessageOfDay, isSameMinuteAsPrev],
     );
 
     if (isLoadingSkeleton) {
@@ -1231,7 +1203,7 @@ export const Message: React.FC<MessageProps> = React.memo(
                     }}
                   />
                 </div>
-              ) : message.type === "gif" ? ( // ADD THIS CASE FOR GIFS
+              ) : message.type === "gif" ? (
                 <div className="message-gif-container">
                   <img
                     src={message.content}
@@ -1274,5 +1246,5 @@ export const Message: React.FC<MessageProps> = React.memo(
       prevProps.channelMembers === nextProps.channelMembers &&
       prevProps.currentUserId === nextProps.currentUserId
     );
-  }
+  },
 );

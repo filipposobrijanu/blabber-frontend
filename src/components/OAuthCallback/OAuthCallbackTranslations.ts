@@ -1,12 +1,8 @@
-// privacyTranslations.ts
-
-// Define the type for Privacy Policy translation keys
 export type OAuthCallbackTranslationsKeys = {
   loading: string;
   connecting: string;
 };
 
-// Define the type for language codes
 export type OAuthCallbackTranslationsCode =
   | "us"
   | "gr"
@@ -16,7 +12,6 @@ export type OAuthCallbackTranslationsCode =
   | "fr"
   | "de";
 
-// Define the translations object with proper typing
 export const OAuthCallbackTranslations: Record<
   OAuthCallbackTranslationsCode,
   OAuthCallbackTranslationsKeys

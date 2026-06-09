@@ -12,31 +12,27 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = (props) => {
   const { selectedLanguage, selectedChannel } = useShopContext();
 
-  // Memoize the navbar style to prevent recalculation
   const navbarStyle: CSSProperties = useMemo(
     () => ({
       borderTopLeftRadius: window.innerWidth < 768 ? "0px" : "2em",
       borderTopRightRadius: window.innerWidth < 768 ? "0px" : "2em",
     }),
-    []
+    [],
   );
 
   const t = translations[selectedLanguage.code as keyof typeof translations];
 
-  // Memoize the text style based on window width
   const textStyle: CSSProperties = useMemo(
     () => ({
       maxWidth: window.innerWidth < 768 ? "220px" : "",
     }),
-    []
+    [],
   );
 
-  // Memoize the channel name display logic
   const displayName = useMemo(() => {
     if (selectedChannel !== "") {
-      // Check if it's a DM channel name (starts with "dm_")
       if (selectedChannel.startsWith("dm_")) {
-        return props.nameOfTop; // Use the actual name from props (should be the friend's name)
+        return props.nameOfTop;
       }
       return selectedChannel;
     }

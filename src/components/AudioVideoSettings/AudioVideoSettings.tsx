@@ -10,7 +10,6 @@ import React, {
 import { AudioVideoSettingsTranslations } from "./AudioVideoSettingsTranslations";
 import { useShopContext } from "../../hooks/useShopContext";
 
-// Memoized DeviceSelect component
 interface CustomDeviceSelectProps {
   value: string;
   onChange: (value: string) => void;
@@ -37,7 +36,7 @@ const CustomDeviceSelect = memo<CustomDeviceSelectProps>(
   }) => {
     const selectedDevice = useMemo(
       () => options.find((opt) => opt.deviceId === value),
-      [options, value]
+      [options, value],
     );
 
     const handleSelect = useCallback(
@@ -45,7 +44,7 @@ const CustomDeviceSelect = memo<CustomDeviceSelectProps>(
         onChange(deviceId);
         onToggle();
       },
-      [onChange, onToggle]
+      [onChange, onToggle],
     );
 
     const handleMouseEnter = useCallback(
@@ -54,7 +53,7 @@ const CustomDeviceSelect = memo<CustomDeviceSelectProps>(
           e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
         }
       },
-      [value]
+      [value],
     );
 
     const handleMouseLeave = useCallback(
@@ -62,7 +61,7 @@ const CustomDeviceSelect = memo<CustomDeviceSelectProps>(
         e.currentTarget.style.backgroundColor =
           deviceId === value ? "rgba(255, 255, 255, 0.1)" : "transparent";
       },
-      [value]
+      [value],
     );
 
     return (
@@ -193,12 +192,11 @@ const CustomDeviceSelect = memo<CustomDeviceSelectProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 CustomDeviceSelect.displayName = "CustomDeviceSelect";
 
-// Memoized AudioLevelIndicator component
 interface AudioLevelIndicatorProps {
   audioLevel: number;
   speakMessage: string;
@@ -229,8 +227,8 @@ const AudioLevelIndicator = memo<AudioLevelIndicatorProps>(
               audioLevel > 80
                 ? "#ef4444"
                 : audioLevel > 50
-                ? "#f59e0b"
-                : "#10b981",
+                  ? "#f59e0b"
+                  : "#10b981",
             transition: "width 0.1s ease, background 0.2s ease",
             borderRadius: "4px",
           }}
@@ -238,7 +236,7 @@ const AudioLevelIndicator = memo<AudioLevelIndicatorProps>(
       </div>
       <small className="text-white-50 mt-1 d-block">{speakMessage}</small>
     </div>
-  )
+  ),
 );
 
 AudioLevelIndicator.displayName = "AudioLevelIndicator";
@@ -291,12 +289,11 @@ export const AudioVideoSettings: React.FC = () => {
       AudioVideoSettingsTranslations[
         selectedLanguage.code as keyof typeof AudioVideoSettingsTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // State
   const [audioInputDevices, setAudioInputDevices] = useState<MediaDeviceInfo[]>(
-    []
+    [],
   );
   const [audioOutputDevices, setAudioOutputDevices] = useState<
     MediaDeviceInfo[]
@@ -326,43 +323,39 @@ export const AudioVideoSettings: React.FC = () => {
   const audioOutputRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
 
-  // Memoize savePreference function
   const savePreference = useCallback((type: string, deviceId: string) => {
     localStorage.setItem(type, deviceId);
   }, []);
 
-  // Device enumeration with permissions
   const enumerateDevices = useCallback(async (withPermissions = false) => {
     try {
       if (withPermissions) {
-        // Request permissions first to get non-empty labels
         await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
       }
 
       const devices = await navigator.mediaDevices.enumerateDevices();
 
       const audioInputs = devices.filter(
-        (device) => device.kind === "audioinput"
+        (device) => device.kind === "audioinput",
       );
       const audioOutputs = devices.filter(
-        (device) => device.kind === "audiooutput"
+        (device) => device.kind === "audiooutput",
       );
       const videoInputs = devices.filter(
-        (device) => device.kind === "videoinput"
+        (device) => device.kind === "videoinput",
       );
 
       setAudioInputDevices(audioInputs);
       setAudioOutputDevices(audioOutputs);
       setVideoDevices(videoInputs);
 
-      // Load saved preferences or use defaults
       const savedAudioInput = localStorage.getItem("preferredAudioInput");
       const savedAudioOutput = localStorage.getItem("preferredAudioOutput");
       const savedVideo = localStorage.getItem("preferredVideoInput");
 
       setSelectedAudioInput(savedAudioInput || audioInputs[0]?.deviceId || "");
       setSelectedAudioOutput(
-        savedAudioOutput || audioOutputs[0]?.deviceId || ""
+        savedAudioOutput || audioOutputs[0]?.deviceId || "",
       );
       setSelectedVideo(savedVideo || videoInputs[0]?.deviceId || "");
     } catch (error) {
@@ -370,12 +363,10 @@ export const AudioVideoSettings: React.FC = () => {
     }
   }, []);
 
-  // Initial device enumeration (without permissions)
   useEffect(() => {
     enumerateDevices(false);
   }, [enumerateDevices]);
 
-  // Device change listener
   useEffect(() => {
     const handleDeviceChange = () => {
       enumerateDevices(false);
@@ -385,7 +376,7 @@ export const AudioVideoSettings: React.FC = () => {
     return () => {
       navigator.mediaDevices.removeEventListener(
         "devicechange",
-        handleDeviceChange
+        handleDeviceChange,
       );
     };
   }, [enumerateDevices]);
@@ -410,7 +401,6 @@ export const AudioVideoSettings: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Audio testing logic
   const startAudioTest = useCallback(async () => {
     try {
       setTestingAudio(true);
@@ -473,7 +463,6 @@ export const AudioVideoSettings: React.FC = () => {
     }
   }, []);
 
-  // Video testing logic
   const startVideoTest = useCallback(async () => {
     try {
       setTestingVideo(true);
@@ -511,7 +500,6 @@ export const AudioVideoSettings: React.FC = () => {
     }
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       stopAudioTest();
@@ -519,7 +507,6 @@ export const AudioVideoSettings: React.FC = () => {
     };
   }, [stopAudioTest, stopVideoTest]);
 
-  // Memoized handlers for device changes
   const handleAudioInputChange = useCallback(
     (deviceId: string) => {
       setSelectedAudioInput(deviceId);
@@ -529,7 +516,7 @@ export const AudioVideoSettings: React.FC = () => {
         setTimeout(() => startAudioTest(), 100);
       }
     },
-    [savePreference, testingAudio, stopAudioTest, startAudioTest]
+    [savePreference, testingAudio, stopAudioTest, startAudioTest],
   );
 
   const handleAudioOutputChange = useCallback(
@@ -537,7 +524,7 @@ export const AudioVideoSettings: React.FC = () => {
       setSelectedAudioOutput(deviceId);
       savePreference("preferredAudioOutput", deviceId);
     },
-    [savePreference]
+    [savePreference],
   );
 
   const handleVideoChange = useCallback(
@@ -549,10 +536,9 @@ export const AudioVideoSettings: React.FC = () => {
         setTimeout(() => startVideoTest(), 100);
       }
     },
-    [savePreference, testingVideo, stopVideoTest, startVideoTest]
+    [savePreference, testingVideo, stopVideoTest, startVideoTest],
   );
 
-  // Memoized icons
   const audioInputIcon = useMemo(
     () => (
       <svg
@@ -567,7 +553,7 @@ export const AudioVideoSettings: React.FC = () => {
         <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5" />
       </svg>
     ),
-    []
+    [],
   );
 
   const audioOutputIcon = useMemo(
@@ -585,7 +571,7 @@ export const AudioVideoSettings: React.FC = () => {
         <path d="M8.707 11.182A4.5 4.5 0 0 0 10.025 8a4.5 4.5 0 0 0-1.318-3.182L8 5.525A3.5 3.5 0 0 1 9.025 8 3.5 3.5 0 0 1 8 10.475zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06" />
       </svg>
     ),
-    []
+    [],
   );
 
   const videoIcon = useMemo(
@@ -604,10 +590,9 @@ export const AudioVideoSettings: React.FC = () => {
         />
       </svg>
     ),
-    []
+    [],
   );
 
-  // Cast refs to non-null types for the component props
   const audioInputRefNonNull = audioInputRef as RefObject<HTMLDivElement>;
   const audioOutputRefNonNull = audioOutputRef as RefObject<HTMLDivElement>;
   const videoRefNonNull = videoRef as RefObject<HTMLDivElement>;

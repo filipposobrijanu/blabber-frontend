@@ -54,7 +54,7 @@ const LoadingState = memo<LoadingStateProps>(
       <span className="visually-hidden text-white">{loadingText}</span>
       <p className="mt-3">{connectingText}</p>
     </div>
-  )
+  ),
 );
 
 LoadingState.displayName = "LoadingState";
@@ -66,22 +66,19 @@ export const AuthGoogleCallback: React.FC = () => {
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-  // Memoize translations
   const t = useMemo(
     () =>
       OAuthCallbackTranslations[
         selectedLanguage.code as keyof typeof OAuthCallbackTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // Memoize cleanup function for auth data
   const cleanupAuthData = useCallback(() => {
     localStorage.removeItem("googleAuthMode");
     localStorage.removeItem("preAuthUrl");
   }, []);
 
-  // Memoize error navigation function
   const navigateToAuthPage = useCallback(
     (mode: string, errorMessage: string, email?: string) => {
       const targetPath = mode === "signup" ? "/signup" : "/login";
@@ -96,10 +93,9 @@ export const AuthGoogleCallback: React.FC = () => {
 
       cleanupAuthData();
     },
-    [navigate, cleanupAuthData]
+    [navigate, cleanupAuthData],
   );
 
-  // Memoize the OAuth callback handler
   const handleGoogleCallback = useCallback(async () => {
     try {
       const urlParams = new URLSearchParams(location.search);
@@ -107,7 +103,6 @@ export const AuthGoogleCallback: React.FC = () => {
       const error = urlParams.get("error");
       const state = urlParams.get("state");
 
-      // Determine auth mode
       let mode = "login"; // Default
 
       if (state) {
@@ -122,21 +117,18 @@ export const AuthGoogleCallback: React.FC = () => {
         mode = localStorage.getItem("googleAuthMode") || "login";
       }
 
-      // Handle OAuth error
       if (error) {
         console.error("Google OAuth error:", error);
         navigateToAuthPage(mode, `Google ${mode} failed`);
         return;
       }
 
-      // Validate authorization code
       if (!code) {
         console.error("No authorization code received");
         navigateToAuthPage(mode, "Authorization failed");
         return;
       }
 
-      // Exchange code for tokens with mode
       const response = await axios.post(
         `${API_URL}/api/auth/google`,
         {
@@ -144,45 +136,39 @@ export const AuthGoogleCallback: React.FC = () => {
           mode,
         },
         {
-          timeout: 10000, // 10 second timeout
-        }
+          timeout: 10000,
+        },
       );
 
       if (response.data.success) {
-        // Store user data
         const userData = response.data.user;
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("isAuthenticated", "true");
 
         console.log("✅ Google authentication successful:", userData.username);
 
-        // Redirect to previous page or home
         const preAuthUrl = localStorage.getItem("preAuthUrl") || "/";
         cleanupAuthData();
 
-        // Use window.location.href for full page reload to trigger Chat component re-render
         window.location.href = preAuthUrl;
         return;
       }
 
-      // Handle needsSignup flag from backend
       if (response.data.needsSignup) {
         navigateToAuthPage(
           "signup",
           response.data.message,
-          response.data.email
+          response.data.email,
         );
         return;
       }
 
-      // Handle other backend errors
       throw new Error(response.data.message || "Authentication failed");
     } catch (error: any) {
       console.error("Google callback error:", error);
 
       const mode = localStorage.getItem("googleAuthMode") || "login";
 
-      // Extract error message
       let errorMessage = "Failed to authenticate with Google";
       if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
@@ -196,7 +182,6 @@ export const AuthGoogleCallback: React.FC = () => {
     }
   }, [location.search, navigateToAuthPage, API_URL, cleanupAuthData]);
 
-  // Main effect with cleanup
   useEffect(() => {
     let mounted = true;
 

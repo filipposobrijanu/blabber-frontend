@@ -15,7 +15,6 @@ interface ActiveNowListProps {
   onStartDM: (userId: string) => void;
 }
 
-// Memoized UserItem component - prevents unnecessary re-renders
 const UserItem = memo(
   ({
     user,
@@ -35,16 +34,16 @@ const UserItem = memo(
         e.stopPropagation();
         onStartDM(user.id);
       },
-      [onStartDM, user.id]
+      [onStartDM, user.id],
     );
 
     const userImage = useMemo(
       () =>
         user.image ||
         `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user.username || "User"
+          user.username || "User",
         )}&background=random`,
-      [user.image, user.username]
+      [user.image, user.username],
     );
 
     return (
@@ -154,12 +153,11 @@ const UserItem = memo(
         </button>
       </div>
     );
-  }
+  },
 );
 
 UserItem.displayName = "UserItem";
 
-// Memoized Skeleton component
 const ActiveNowSkeleton = memo(() => {
   const skeletons = useMemo(() => Array.from({ length: 4 }), []);
 
@@ -236,7 +234,6 @@ const ActiveNowSkeleton = memo(() => {
 
 ActiveNowSkeleton.displayName = "ActiveNowSkeleton";
 
-// Memoized EmptyState component
 const EmptyState = memo(
   ({
     t,
@@ -266,7 +263,7 @@ const EmptyState = memo(
         <p className="text-white m-0 small px-2">{t.noOneOnlineMessage}</p>
       </div>
     </div>
-  )
+  ),
 );
 
 EmptyState.displayName = "EmptyState";
@@ -280,28 +277,23 @@ export const ActiveNowList: React.FC<ActiveNowListProps> = ({
   const { onlineFriends } = useFriends();
   const { onlineUsers } = useUsersContext();
 
-  // Memoize translation to prevent recalculation
   const t = useMemo(
     () =>
       activeNowTranslations[
         selectedLanguage.code as keyof typeof activeNowTranslations
       ],
-    [selectedLanguage.code]
+    [selectedLanguage.code],
   );
 
-  // Memoize active friends list with optimized filtering
   const userFriends = useMemo(() => {
-    // Create a Set of friend IDs for O(1) lookups
     const currentUserFriendIds = new Set(
-      onlineFriends?.map((friend) => friend.id) || []
+      onlineFriends?.map((friend) => friend.id) || [],
     );
 
-    // Early return if no friends or online users
     if (!onlineUsers.length || !currentUserFriendIds.size) {
       return [];
     }
 
-    // Filter users in a single pass
     const friends: User[] = [];
 
     for (const user of onlineUsers) {
@@ -325,16 +317,14 @@ export const ActiveNowList: React.FC<ActiveNowListProps> = ({
     return friends;
   }, [onlineUsers, onlineFriends, currentUser.id]);
 
-  // Memoize the container style
   const containerStyle = useMemo(
     () => ({
       height: "100%",
       overflowY: "auto" as const,
     }),
-    []
+    [],
   );
 
-  // Handle loading state effect
   useEffect(() => {
     let mounted = true;
 
@@ -356,20 +346,17 @@ export const ActiveNowList: React.FC<ActiveNowListProps> = ({
     };
   }, [onlineFriends]);
 
-  // Memoize the DM handler to prevent recreation - MUST BE CALLED BEFORE ANY CONDITIONAL RETURNS
   const handleStartDM = useCallback(
     (userId: string) => {
       onStartDM(userId);
     },
-    [onStartDM]
+    [onStartDM],
   );
 
-  // Render loading skeleton
   if (isLoadingSkeleton) {
     return <ActiveNowSkeleton />;
   }
 
-  // Early return for empty state
   if (userFriends.length === 0) {
     return <EmptyState t={t} />;
   }
