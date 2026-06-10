@@ -73,13 +73,7 @@ cd blabber-frontend
 npm install
 ```
 
-**3. Set up your environment variables:**
-Create a `.env` file in the root directory to point to your real-time WebSocket backend:
-```env
-REACT_APP_BACKEND_URL="https://your-blabber-backend.onrender.com"
-```
-
-**4. Start the local development server:**
+**3. Start the local development server:**
 ```bash
 npm start
 ```
