@@ -1,4 +1,4 @@
-<h1 align="center">💬 Blabber Chat</h1>
+<h1 align="center">Blabber Chat</h1>
 <h3 align="center">Real-Time Messaging Frontend Client (Discord-Inspired)</h3>
 
 <p align="center">
@@ -18,11 +18,11 @@
 
 ### ✨ Core Features
 
-* **⚡ Event-Driven Bi-directional UI:** Native integration with WebSockets for real-time state synchronization, message rendering, and server-side push notifications without layout flashing or overhead fetching.
-* **📱 Desktop & Tablet Optimized Layouts:** A custom Discord-inspired multi-pane UI architecture that flawlessly handles sidebar channel hierarchies, active member rosters, and main chat spaces.
-* **🧩 Scalable Component-Based Architecture:** Engineered with React and strong TypeScript primitives to achieve declarative UI states, predictable state management, and reusable UI components.
-* **🔄 Dynamic Channel Navigation:** Smooth client-side routing and channel switching with contextual room caching to minimize fetch intervals between active conversations.
-* **🟢 Real-Time Presence & State Triggers:** Low-overhead indicators displaying real-time visual feedback for typing status (`typing...`) and active peer connection metrics.
+* **Event-Driven Bi-directional UI:** Native integration with WebSockets for real-time state synchronization, message rendering, and server-side push notifications without layout flashing or overhead fetching.
+* **Desktop & Tablet Optimized Layouts:** A custom Discord-inspired multi-pane UI architecture that flawlessly handles sidebar channel hierarchies, active member rosters, and main chat spaces.
+* **Scalable Component-Based Architecture:** Engineered with React and strong TypeScript primitives to achieve declarative UI states, predictable state management, and reusable UI components.
+* **Dynamic Channel Navigation:** Smooth client-side routing and channel switching with contextual room caching to minimize fetch intervals between active conversations.
+* **Real-Time Presence & State Triggers:** Low-overhead indicators displaying real-time visual feedback for typing status (`typing...`) and active peer connection metrics.
 
 ---
 
