@@ -1,8 +1,8 @@
 <h1 align="center">Blabber Chat</h1>
-<h3 align="center">Real-Time Messaging Frontend Client (Discord-Inspired)</h3>
+<h3 align="center">Real-Time Messaging Client (Discord-Inspired)</h3>
 
 <p align="center">
-  The production-ready frontend client for <strong>Blabber Chat</strong>, a real-time messaging application engineered for low-latency communication. This interface provides a highly responsive, dynamic user experience featuring state-driven channel layouts, live WebSocket event orchestration, and instant media-supported messaging capabilities.
+  The frontend client for <strong>Blabber Chat</strong>, a real-time messaging application engineered for communication. This interface provides a highly responsive, dynamic user experience featuring state-driven channel layouts, live WebSocket event orchestration, and instant media-supported messaging capabilities.
 </p>
 
 <p align="center">
@@ -16,17 +16,16 @@
 
 ---
 
-### ✨ Core Features
+### Core Features
 
 * **Event-Driven Bi-directional UI:** Native integration with WebSockets for real-time state synchronization, message rendering, and server-side push notifications without layout flashing or overhead fetching.
-* **Desktop & Tablet Optimized Layouts:** A custom Discord-inspired multi-pane UI architecture that flawlessly handles sidebar channel hierarchies, active member rosters, and main chat spaces.
+* **Desktop & Tablet Optimized Layouts:** A custom Discord-inspired split-view UI architecture that flawlessly handles sidebar channel hierarchies, active member rosters, and main chat spaces.
 * **Scalable Component-Based Architecture:** Engineered with React and strong TypeScript primitives to achieve declarative UI states, predictable state management, and reusable UI components.
-* **Dynamic Channel Navigation:** Smooth client-side routing and channel switching with contextual room caching to minimize fetch intervals between active conversations.
 * **Real-Time Presence & State Triggers:** Low-overhead indicators displaying real-time visual feedback for typing status (`typing...`) and active peer connection metrics.
 
 ---
 
-### 🛠️ Tech Stack
+### Tech Stack
 
 **Core Framework & State Architecture**
 <p align="left">
@@ -58,7 +57,7 @@
 
 ---
 
-### 📸 Application Showcase
+### Application Showcase
 
 <p align="center">
   <img src="images/0.PNG" width="48%" />
@@ -75,7 +74,7 @@
 
 ---
 
-### 🚀 Getting Started
+### Getting Started
 
 **1. Clone the repository:**
 ```bash
