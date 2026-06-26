@@ -18,10 +18,9 @@
 
 ### Core Features
 
-* **Event-Driven Bi-directional UI:** Native integration with WebSockets for real-time state synchronization, message rendering, and server-side push notifications without layout flashing or overhead fetching.
-* **Desktop & Tablet Optimized Layouts:** A custom Discord-inspired split-view UI architecture that flawlessly handles sidebar channel hierarchies, active member rosters, and main chat spaces.
-* **Scalable Component-Based Architecture:** Engineered with React and strong TypeScript primitives to achieve declarative UI states, predictable state management, and reusable UI components.
-* **Real-Time Presence & State Triggers:** Low-overhead indicators displaying real-time visual feedback for typing status (`typing...`) and active peer connection metrics.
+* **Synchronized States & Presence:** Architected a real-time messaging pipeline using Socket.io to seamlessly manage active chat states, user online tracking, and live typing indicators with minimal latency.
+* **Discord-Inspired UI Architecture:** A custom split-view interface optimized for desktop and tablet screens that seamlessly manages complex sidebar channel hierarchies and primary chat views.
+* **Secure Backend Infrastructure:** Engineered a RESTful API backend featuring stateless JWT authentication, cloud-integrated media uploads via Cloudinary, and automated email alerts using Nodemailer.
 
 ---
 
